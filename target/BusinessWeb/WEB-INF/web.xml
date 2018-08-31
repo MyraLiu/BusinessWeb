@@ -4,6 +4,17 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
 
-
-
+ <listener>
+  <listener-class>com.neuedu.listener.TestListener</listener-class>
+ </listener>
+ 
+<filter>
+ <filter-name>test</filter-name>
+ <filter-class>com.neuedu.filter.TestFilter</filter-class>
+</filter>
+ <filter-mapping>
+  <filter-name>test</filter-name>
+  <url-pattern>/hello</url-pattern>
+ </filter-mapping>
+<!--拦截所有的请求  写 /*-->
  </web-app>

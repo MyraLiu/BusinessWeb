@@ -24,6 +24,7 @@ public class HelloServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("====dopost==Hello Servlet====="+request.getParameter("username"));
+        doGet(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,18 +38,19 @@ public class HelloServlet extends HttpServlet {
 //        session域
         HttpSession httpSession = request.getSession();
         httpSession.setAttribute("username","admin");
+        httpSession.setMaxInactiveInterval(10);
 //        统计访问helloservlet的次数   全局域
         ServletContext application =  this.getServletContext();
 
-        Object count = application.getAttribute("count");
-        if(count == null){
-            application.setAttribute("count",1);
-        }else{
-            int count1 = (int)count;
-            application.setAttribute("count",++count1);
-        }
+//        Object count = application.getAttribute("count");
+//        if(count == null){
+//            application.setAttribute("count",1);
+//        }else{
+//            int count1 = (int)count;
+//            application.setAttribute("count",++count1);
+//        }
         System.out.println("访问次数"+application.getAttribute("count"));
-        response.sendRedirect("login.jsp");
+//        response.sendRedirect("login.jsp");
     }
 
 

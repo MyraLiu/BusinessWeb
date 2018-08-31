@@ -27,6 +27,7 @@ public class SessionServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
 //        response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
+        request.setAttribute("nature","nat");
         String sessionId = session.getId();
         PrintWriter writer = response.getWriter();
         if(session.isNew()){
@@ -34,6 +35,13 @@ public class SessionServlet extends HttpServlet {
           writer.print ("新建一个会话");
         }
        writer.print("sessionid="+sessionId);
+//        int maxTime = session.getMaxInactiveInterval();
+//        writer.print("过期时间="+maxTime+"<br/>");
+//        session.setMaxInactiveInterval(10);
+//        writer.print("过期时间="+maxTime+"<br/>");
+//        session.invalidate();//会话立刻失效
+//        writer.print("换行了吗");//测试<br/>效果
+
     }
     
 }
