@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
+/**
+ * 练习使用
+ */
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
 

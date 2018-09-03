@@ -9,9 +9,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Product Page</title>
 </head>
 <body>
+<h1>${user.username}商品列表</h1>
 <c:forEach items="${productlist}" var="p">
     商品id  ${p.id}-----> 商品名称${p.name}<br/>
 </c:forEach>

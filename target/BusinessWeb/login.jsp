@@ -14,9 +14,9 @@
 <h1>欢迎登录${username}</h1>
 <%--<form method="post" action="/hello">时跳转到http://localhost:8080/hello绝对路径--%>
 <%--<form method="post" action="hello">时跳转到http://localhost:8080/BusinessWeb/hello相对路径--%>
-<form method="post" action="hello">
+<form method="post" action="user">
     <input name="username" type="text">
-    <input type="submit">
+    <input type="submit" value="提交">
 
 </form>
 
