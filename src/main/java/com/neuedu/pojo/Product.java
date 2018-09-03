@@ -1,4 +1,4 @@
-package com.neuedu.beans;
+package com.neuedu.pojo;
 
 public class Product {
     private  Integer id;

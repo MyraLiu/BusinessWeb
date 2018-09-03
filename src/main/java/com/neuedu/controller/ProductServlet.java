@@ -1,6 +1,6 @@
 package com.neuedu.controller;
 
-import com.neuedu.beans.Product;
+import com.neuedu.pojo.Product;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

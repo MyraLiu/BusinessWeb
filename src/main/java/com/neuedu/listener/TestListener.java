@@ -9,6 +9,10 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
+/**
+ * 实现统计会员在线人数
+ *
+ */
 //@WebListener()
 public class TestListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
