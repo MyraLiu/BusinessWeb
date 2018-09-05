@@ -21,6 +21,11 @@ IUserDao userDao ;
     UserInfo userInfo = userDao.login("admin","123456");
         System.out.println(userInfo);
     }
+    @Test
+    public void testCheckUsername(){
+    int i=userDao.checkUsername("bili");
+    System.out.println(i);
+    }
 
 
     @After

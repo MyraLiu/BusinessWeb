@@ -3,6 +3,7 @@ package com.neuedu.common;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 /**
+ * MD5加密工具类
  * MD5���ܹ�����
  * */
 public class MD5Utils {
