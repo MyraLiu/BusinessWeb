@@ -13,5 +13,8 @@ public interface IUserDao {
     public UserInfo selectByemail(String email);
     public String findQuestionByUsername(String username);
     public String findQuestionByEmail(String email);
+    public int checkAnswer(String username,String question,String answer);
+    public  int updatepassword(String username,String newPassword);
+    public int updateTokenByID(int  userid,String token);
 
 }

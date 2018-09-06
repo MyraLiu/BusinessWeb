@@ -374,4 +374,89 @@ public class UserDaoImpl implements IUserDao {
         return null;
     }
 
+    @Override
+    public int checkAnswer(String username, String question, String answer) {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = JDBCUtils.getConnection();
+//            System.out.println("connection = " + connection);
+            String sql = "select count(1) from neuedu_user where username=? and question=? and answer=?;";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, question);
+            preparedStatement.setString(3, answer);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.first()) {
+                int count = resultSet.getInt(1);
+                return count;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                JDBCUtils.close(connection,preparedStatement,resultSet);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int updatepassword(String username, String newPassword) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = JDBCUtils.getConnection();
+//            System.out.println("connection = " + connection);
+            String sql = "update neuedu_user set password=? where username = ?;";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, username);
+            return preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                JDBCUtils.close(connection,preparedStatement,resultSet);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+
+    public int updateTokenByID(int  userid,String token){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = JDBCUtils.getConnection();
+//            System.out.println("connection = " + connection);
+            String sql = "update neuedu_user set token=? where id = ?;";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, token);
+            preparedStatement.setInt(2, userid);
+            return preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                JDBCUtils.close(connection,preparedStatement,resultSet);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
 }
