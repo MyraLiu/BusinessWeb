@@ -1,6 +1,8 @@
 package com.neuedu.pojo;
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
     private Integer id;// '用户表id',
     private String username;//  '用户名',
     private String password;//   '用户密码，MD5加密',

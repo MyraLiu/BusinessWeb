@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="static/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+<script>
+
+    // $.ready()
+    $(function () {
+        $.ajax({
+            type:"get",
+            url:"http://localhost:8080/BusinessWeb/user",
+            async:true,
+            dataType:"json",//
+            //dataType="jsonp",//
+            data:{"operation":"1","username":"admin3","password":"admin3"},
+            success:function (data) {
+                alert(data.username);
+            }
+        });
+    })
+
+
+</script>
+</body>
+</html>

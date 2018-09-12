@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2017 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--命名空间：对应接口类-->
+<mapper namespace="com.neuedu.dao.ICategoryDao">
+
+    <resultMap id="categoryMap" type="category" autoMapping="true">
+
+        <!--属性映射-->
+        <id column="cid" property="id"></id>
+        <result column="cname" property="name"></result>
+        <result column="cstatus" property="status"></result>
+        <result column="cctime" property="create_time"></result>
+        <result column="cutime" property="update_time"></result>
+        <!--组件的映射-->
+
+        <!--配置一对一的映射-->
+        <collection property="productList" column="category_id" javaType="java.util.ArrayList" ofType="product" autoMapping="true">
+
+            <id column="pid" property="id"></id>
+
+            <result column="pname" property="name"></result>
+            <result column="pctime" property="create_time"></result>
+            <result column="putime" property="update_time"></result>
+        </collection>
+    </resultMap>
+    <!--根据id查询商品信息-->
+    <!--复杂的映射类型-->
+    <select id="findCategoryById" parameterType="int" resultMap="categoryMap">
+
+        select p.id pid,p.category_id,p.name pname ,p.subtitle,p.main_image,p.sub_images,p.price,p.stock,p.status pstatus,p.create_time pctime,p.update_time putime,
+        c.id cid,c.parent_id,c.name cname,c.status cstatus,c.sort_order,c.create_time cctime,c.update_time cutime
+        from neuedu_category c
+        left join neuedu_product p
+        on p.category_id = c.id
+        where c.id=#{categoryid}
+    </select>
+
+
+    <select id="findSubCategoryById" parameterType="int" resultType="category" >
+
+        select id,parent_id,name,status,sort_order,create_time,update_time
+        from neuedu_category
+        where parent_id = #{id}
+
+    </select>
+
+
+    <insert id="addCategory" keyProperty="id" parameterType="map" useGeneratedKeys="true" statementType="PREPARED">
+        insert into neuedu_category
+        (parent_id ,name)
+        values(#{parentid},#{categoryname})
+    </insert>
+
+</mapper>

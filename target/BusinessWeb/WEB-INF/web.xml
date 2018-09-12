@@ -11,10 +11,30 @@
  </error-page>
 
 
+ <!--配置servlet方法-->
+<!-- <servlet>
+  <servlet-name></servlet-name>
+  <servlet-class></servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name></servlet-name>
+  <url-pattern></url-pattern>
+ </servlet-mapping>-->
+
+ <!--service配置-->
+<!-- <service-ref>
+  <service-ref-name></service-ref-name>
+  <service-interface> </service-interface>
+
+ </service-ref>-->
+
+<!--监听器的配置-->
  <listener>
   <listener-class>com.neuedu.listener.TestListener</listener-class>
  </listener>
- 
+
+
+ <!--过滤器的配置-->
 <filter>
  <filter-name>test</filter-name>
  <filter-class>com.neuedu.filter.TestFilter</filter-class>

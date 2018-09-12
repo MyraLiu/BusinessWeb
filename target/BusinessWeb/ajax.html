@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="ready()">
+<h1>这是ajax练习html</h1>
+<script>
+function ready(){
+    //ajax请求
+    //创建核心对象
+    var xmlhttp;
+    if(window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest();
+    }else{
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("GET","http://localhost:8080/BusinessWeb/user?username=admin3&password=admin3&operation=1",true);
+    xmlhttp.send();
+
+    //监听请求响应的状态
+    xmlhttp.onreadystatechange = function () {
+        if(xmlhttp.readyState==4 && xmlhttp.status==200){
+            // alert(xmlhttp.responseText);
+           var json= xmlhttp.responseText
+            document.getElementById("data").innerHTML = json;
+        }
+    }
+
+
+}
+
+</script>
+
+
+<span id="data"></span>
+</body>
+</html>

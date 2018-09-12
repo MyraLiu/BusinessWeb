@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserDaoImpl implements IUserDao {
 
@@ -457,6 +458,37 @@ public class UserDaoImpl implements IUserDao {
                 e.printStackTrace();
             }
         }
+        return 0;
+    }
+
+    @Override
+    public List<UserInfo> findAll() {
+        return null;
+    }
+
+
+
+    public List<UserInfo> findAllByUsername(String username){
+        return null;
+    }
+
+    @Override
+    public UserInfo findByOption(UserInfo user) {
+        return null;
+    }
+
+    @Override
+    public List<UserInfo> findByIds(List<Integer> listid) {
+        return null;
+    }
+
+    @Override
+    public int updateUser(UserInfo user) {
+        return 0;
+    }
+
+    @Override
+    public int insertUsers(List<UserInfo> users) {
         return 0;
     }
 }

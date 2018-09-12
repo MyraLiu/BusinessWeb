@@ -20,8 +20,8 @@ public class ProductServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Product p1 = new Product(1,"手机");
-        Product p2 = new Product(2,"电脑");
+        Product p1 = new Product();
+        Product p2 = new Product();
 
         List<Product> products = new ArrayList<>();
         products.add(p1);
