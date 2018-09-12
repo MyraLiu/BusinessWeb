@@ -34,6 +34,49 @@
       <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/neuedu/CategoryDaoTest.java" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/neuedu/MybatisTest.java" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/neuedu/ProductDaoImplTest.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/common/MyBatisUtils.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/common/ServerResponse.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/controller/CategoryServlet.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/dao/ICategoryDao.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/dao/IProductDao.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/dao/impl/CategoryDaoImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/dao/impl/ProductDaoImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/dao/impl/UserDaoMyBatisImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/mapper/CategoryMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/mapper/ProductMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/mapper/UserInfoMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/pojo/Category.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/service/ICategoryService.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/com/neuedu/service/impl/CategoryServiceImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/log4j.properties" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/classes/mybatis-config.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/lib/gson-2.8.0.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/lib/log4j-1.2.17.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/lib/log4j-api-2.3.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/lib/log4j-core-2.3.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/WEB-INF/lib/mybatis-3.4.5.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/ajax.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/jquery.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/BusinessWeb/static/jquery-3.3.1.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/common/MyBatisUtils.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/common/ServerResponse.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/controller/CategoryServlet.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/dao/ICategoryDao.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/dao/IProductDao.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/dao/impl/CategoryDaoImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/dao/impl/ProductDaoImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/dao/impl/UserDaoMyBatisImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/mapper/CategoryMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/mapper/ProductMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/mapper/UserInfoMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/pojo/Category.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/service/ICategoryService.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/com/neuedu/service/impl/CategoryServiceImpl.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/log4j.properties" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/mybatis-config.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/test-classes/com/neuedu/CategoryDaoTest.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/test-classes/com/neuedu/MybatisTest.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/target/test-classes/com/neuedu/ProductDaoImplTest.class" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/BusinessWeb_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/BusinessWeb_war_exploded.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/BusinessWeb.iml" afterPath="$PROJECT_DIR$/BusinessWeb.iml" />
@@ -265,7 +308,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="738" />
     <option name="y" value="49" />
     <option name="width" value="1176" />
@@ -872,7 +915,7 @@
       <workItem from="1536573996370" duration="10084000" />
       <workItem from="1536624122678" duration="5689000" />
       <workItem from="1536636837096" duration="13588000" />
-      <workItem from="1536710864787" duration="1232000" />
+      <workItem from="1536710864787" duration="1623000" />
     </task>
     <task id="LOCAL-00001" summary="begin the project">
       <created>1535940537011</created>
@@ -917,7 +960,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178044000" />
+    <option name="totallyTimeSpent" value="178435000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -929,7 +972,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.49570817" order="6" side_tool="false" content_ui="tabs" />
@@ -937,15 +980,15 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.49785408" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18346547" sideWeight="0.15611587" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6002265" sideWeight="0.5198498" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32842582" sideWeight="0.4873477" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.49570817" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18346547" sideWeight="0.8438841" order="2" side_tool="false" content_ui="tabs" x="0" y="364" width="1920" height="301" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13974799" sideWeight="0.48237884" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6002265" sideWeight="0.48015022" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19849785" sideWeight="0.6710037" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19849785" sideWeight="0.6710037" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18874773" sideWeight="0.32899627" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4940978" order="1" side_tool="false" content_ui="tabs" />
