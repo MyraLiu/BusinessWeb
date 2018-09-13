@@ -34,7 +34,7 @@
         <result column="cutime" property="update_time"></result>
         <!--组件的映射-->
 
-        <!--配置一对一的映射-->
+        <!--配置一对duo的映射-->
         <collection property="productList" column="category_id" javaType="java.util.ArrayList" ofType="product" autoMapping="true">
 
             <id column="pid" property="id"></id>

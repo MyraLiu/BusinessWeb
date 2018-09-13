@@ -5,10 +5,58 @@ import com.neuedu.dao.ICategoryDao;
 import com.neuedu.pojo.Category;
 import org.apache.ibatis.javassist.CtBehavior;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resources;
 import java.util.*;
 
+@Repository
 public class CategoryDaoImpl implements ICategoryDao {
+
+    private int categoryId;
+    @Autowired
+private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+//
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public CategoryDaoImpl(Category category) {
+        this.category = category;
+        System.out.println("======CategoryDaoImpl==Category====");
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public CategoryDaoImpl(int categoryId) {
+        this.categoryId = categoryId;
+        System.out.println("======CategoryDaoImpl构造方法==categoryId===");
+    }
+
+    public CategoryDaoImpl() {
+        System.out.println("======CategoryDaoImpl构造方法==无参===");
+    }
+
+    public void init(){
+        System.out.println("======CategoryDaoImpl-init方法=====");
+    }
+    public void destory(){
+        System.out.println("======CategoryDaoImpl-destory方法=====");
+    }
+
+
+
     @Override
     public Category findCategoryById(int id) {
         SqlSession sqlSession = MyBatisUtils.getSqlSession();

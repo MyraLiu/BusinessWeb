@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解配置-->
+    <!--定义扫描包，扫描package包及子包中添加注解的类，由IOC容器管理-->
+<context:component-scan  base-package="com.neuedu"/>
+<bean class="com.neuedu.pojo.Category"/>
+
+    <!--
+    容器配置：
+    通过spring ioc容器窗帘CategoryDaoImpl的实现类  - - - 》new CategoryDaoImpl()
+    id:bean的名称  categoryDaoImpl =new CategoryDaoImpl();
+    class:要创建的bean的class
+    scope :prototype  singleton  request   session   globalsession
+
+    依赖注入：bean的属性赋值
+    属性的setter   底层调用set方法
+    构造器注入  构造方法
+
+    autowire=""   byName (id名)  byType（类型唯一）  constructor（找对应类型的构造方法）
+    -->
+    <!--<bean id="categoryDaoImpl" class="com.neuedu.dao.impl.CategoryDaoImpl" init-method="init" destroy-method="destory" scope="singleton"-->
+    <!--autowire="constructor">-->
+
+       <!--<property name="categoryId" value="1232" ></property>-->
+       <!--<property name="category" ref="category" ></property>-->
+        <!--<constructor-arg index="0" value="22"></constructor-arg>-->
+
+
+    <!--</bean>-->
+
+
+    <!--<bean id="category" class="com.neuedu.pojo.Category"></bean>-->
+</beans>
+
