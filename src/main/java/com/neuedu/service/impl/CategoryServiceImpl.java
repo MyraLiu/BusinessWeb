@@ -7,10 +7,12 @@ import com.neuedu.pojo.Category;
 import com.neuedu.service.ICategoryService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 
+@Service
 public class CategoryServiceImpl implements ICategoryService {
     ICategoryDao categoryDao ;
 
@@ -18,13 +20,13 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryServiceImpl() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
         categoryDao = (ICategoryDao) applicationContext.getBean("categoryDaoImpl");
-        CategoryDaoImpl cd2 = (CategoryDaoImpl) applicationContext.getBean("categoryDaoImpl");
+//        CategoryDaoImpl cd2 = (CategoryDaoImpl) applicationContext.getBean("categoryDaoImpl");
 //        System.out.println(categoryDao);
 //        System.out.println(cd2);
 //        System.out.println(cd2==categoryDao);
 
 //        System.out.println(cd2.getCategoryId());
-        System.out.println("====Category===="+cd2.getCategory());
+//        System.out.println("====Category===="+cd2.getCategory());
 //        System.out.println("======="+categoryDao);
     }
 

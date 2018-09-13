@@ -6,17 +6,24 @@ import com.neuedu.pojo.Category;
 import org.apache.ibatis.javassist.CtBehavior;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import javax.annotation.Resources;
 import java.util.*;
 
 @Repository
 public class CategoryDaoImpl implements ICategoryDao {
 
-    private int categoryId;
     @Autowired
-private Category category;
+    private SqlSession sqlSession;
+
+    private int categoryId;
+    /*@Autowired
+    @Qualifier("category1")*/
+//@Resource(name="category1")
+    private Category category;
 
     public Category getCategory() {
         return category;
@@ -25,7 +32,8 @@ private Category category;
     public void setCategory(Category category) {
         this.category = category;
     }
-//
+
+    //
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
@@ -48,18 +56,18 @@ private Category category;
         System.out.println("======CategoryDaoImpl构造方法==无参===");
     }
 
-    public void init(){
+    public void init() {
         System.out.println("======CategoryDaoImpl-init方法=====");
     }
-    public void destory(){
+
+    public void destory() {
         System.out.println("======CategoryDaoImpl-destory方法=====");
     }
 
 
-
     @Override
     public Category findCategoryById(int id) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
+//        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         System.out.println(id);
         return sqlSession.selectOne("com.neuedu.dao.ICategoryDao.findCategoryById", id);
     }
@@ -67,14 +75,14 @@ private Category category;
     @Override
     public List<Category> findSubCategoryById(int id) {
 
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
+//        SqlSession sqlSession = MyBatisUtils.getSqlSession();
 
         return sqlSession.selectList("com.neuedu.dao.ICategoryDao.findSubCategoryById", id);
     }
 
     @Override
     public int addCategory(int parent_id, String name) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
+//        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         Map<String, Object> map = new HashMap<>();
         map.put("parentid", parent_id);
         map.put("categoryname", name);
@@ -86,7 +94,7 @@ private Category category;
 
     @Override
     public int updateCategoryName(int categoryid, String newname) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
+//        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         Map<String, Object> map = new HashMap<>();
         map.put("categoryid", categoryid);
         map.put("categoryname", newname);
@@ -98,26 +106,27 @@ private Category category;
     @Override
     public Set<Category> findAllSubCategory(int id) {
         Set<Category> sc = new LinkedHashSet<>();
-        sc=findAll(sc,id);
+        sc = findAll(sc, id);
         return sc;
     }
 
 
     /**
      * 递归查询子分类，及添加分类id
+     *
      * @param sc
      * @param id
      * @return
      */
-    private static Set<Category> findAll(Set<Category> sc,int id){
+    private static Set<Category> findAll(Set<Category> sc, int id) {
         CategoryDaoImpl categoryDao = new CategoryDaoImpl();
         Category category = categoryDao.findCategoryById(id);
-        if(category!=null){
+        if (category != null) {
             sc.add(category);
         }
         List<Category> listc = categoryDao.findSubCategoryById(id);
-        for (Category c:listc) {
-            findAll(sc,c.getId());
+        for (Category c : listc) {
+            findAll(sc, c.getId());
         }
         return sc;
     }

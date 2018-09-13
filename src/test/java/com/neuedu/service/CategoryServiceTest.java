@@ -7,7 +7,7 @@ public class CategoryServiceTest {
 
     @Test
     public void test(){
-ICategoryService categoryService = new CategoryServiceImpl();
+        ICategoryService categoryService = new CategoryServiceImpl();
         System.out.println(categoryService.findSubCategoryById(100032));
     }
 }
