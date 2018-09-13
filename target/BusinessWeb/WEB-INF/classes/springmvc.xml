@@ -18,7 +18,4 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
- <bean id="categoryDaoImpl" class="com.neuedu.dao.impl.CategoryDaoImpl">
-
- </bean>
 </beans>

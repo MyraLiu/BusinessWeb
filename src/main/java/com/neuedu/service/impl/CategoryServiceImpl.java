@@ -5,6 +5,7 @@ import com.neuedu.dao.ICategoryDao;
 import com.neuedu.dao.impl.CategoryDaoImpl;
 import com.neuedu.pojo.Category;
 import com.neuedu.service.ICategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
-@Service
+
 public class CategoryServiceImpl implements ICategoryService {
-    ICategoryDao categoryDao ;
+
+    ICategoryDao categoryDao;
 
 
     public CategoryServiceImpl() {
@@ -24,17 +26,15 @@ public class CategoryServiceImpl implements ICategoryService {
 //        System.out.println(categoryDao);
 //        System.out.println(cd2);
 //        System.out.println(cd2==categoryDao);
-
+//
 //        System.out.println(cd2.getCategoryId());
 //        System.out.println("====Category===="+cd2.getCategory());
-//        System.out.println("======="+categoryDao);
+        System.out.println("======="+categoryDao);
     }
 
     @Override
     public List<Category> findSubCategoryById(int id) {
-
-
-        return categoryDao.findSubCategoryById(id);
+        return   categoryDao.findSubCategoryById(id);
     }
 
     @Override

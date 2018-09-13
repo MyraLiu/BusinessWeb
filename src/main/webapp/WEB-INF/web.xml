@@ -43,14 +43,14 @@
   <filter-name>test</filter-name>
   <url-pattern>/hello</url-pattern>
  </filter-mapping>
-<!--拦截所有的请求  写 /*-->
 
+<!--spring mvc-->
  <context-param>
   <param-name>contextConfigLocation</param-name>
   <param-value>classpath:spring.xml</param-value>
  </context-param>
  <listener>
-  <listenerclass>org.springframework.web.context.ContextLoaderListener</listenerclass>
+  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  </listener>
  <servlet>
   <servlet-name>dispatcherServlet</servlet-name>

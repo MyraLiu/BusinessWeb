@@ -22,8 +22,9 @@ public class CategoryDaoImpl implements ICategoryDao {
     private int categoryId;
     /*@Autowired
     @Qualifier("category1")*/
-//@Resource(name="category1")
+    //@Resource(name="category1")
     private Category category;
+
 
     public Category getCategory() {
         return category;
@@ -76,8 +77,8 @@ public class CategoryDaoImpl implements ICategoryDao {
     public List<Category> findSubCategoryById(int id) {
 
 //        SqlSession sqlSession = MyBatisUtils.getSqlSession();
-
-        return sqlSession.selectList("com.neuedu.dao.ICategoryDao.findSubCategoryById", id);
+    List<Category> listc = sqlSession.selectList("com.neuedu.dao.ICategoryDao.findSubCategoryById", id);
+        return  listc;
     }
 
     @Override

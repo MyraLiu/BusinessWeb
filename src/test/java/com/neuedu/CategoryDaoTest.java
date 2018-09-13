@@ -46,6 +46,7 @@ public class CategoryDaoTest {
         System.out.println(categoryDao.findAllSubCategory(100032));
     }
 
+
     @After
     public  void afterTest(){
         categoryDao=null;

@@ -10,4 +10,5 @@ public class CategoryServiceTest {
         ICategoryService categoryService = new CategoryServiceImpl();
         System.out.println(categoryService.findSubCategoryById(100032));
     }
+
 }

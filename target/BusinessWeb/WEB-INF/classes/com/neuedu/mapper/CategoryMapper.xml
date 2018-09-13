@@ -34,7 +34,7 @@
         <result column="cutime" property="update_time"></result>
         <!--组件的映射-->
 
-        <!--配置一对一的映射-->
+        <!--配置一对duo的映射-->
         <collection property="productList" column="category_id" javaType="java.util.ArrayList" ofType="product" autoMapping="true">
 
             <id column="pid" property="id"></id>
@@ -56,7 +56,7 @@
         where c.id=#{categoryid}
     </select>
 
-
+<!--查询子节点-->
     <select id="findSubCategoryById" parameterType="int" resultType="category" >
 
         select id,parent_id,name,status,sort_order,create_time,update_time
@@ -66,10 +66,23 @@
     </select>
 
 
+
+    <!--插入新节点  新分类-->
     <insert id="addCategory" keyProperty="id" parameterType="map" useGeneratedKeys="true" statementType="PREPARED">
         insert into neuedu_category
         (parent_id ,name)
         values(#{parentid},#{categoryname})
     </insert>
 
+
+    <!--修改品类名称-->
+    <update id="updateCategoryName" parameterType="map">
+        update neuedu_category
+        <set>
+            name=#{categoryname}
+        </set>
+        <where>
+            id=#{categoryid}
+        </where>
+    </update>
 </mapper>

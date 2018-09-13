@@ -11,11 +11,14 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
- <!--   <mvc:annotation-driven />
+   <mvc:annotation-driven />
     <context:component-scan base-package="com.neuedu"/>
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>-->
+    </bean>
+ <bean id="categoryDaoImpl" class="com.neuedu.dao.impl.CategoryDaoImpl">
+
+ </bean>
 </beans>
