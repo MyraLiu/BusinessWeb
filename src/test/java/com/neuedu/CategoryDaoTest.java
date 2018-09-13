@@ -4,6 +4,7 @@ import com.neuedu.dao.ICategoryDao;
 import com.neuedu.dao.IProductDao;
 import com.neuedu.dao.impl.CategoryDaoImpl;
 import com.neuedu.dao.impl.ProductDaoImpl;
+import com.neuedu.pojo.Category;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

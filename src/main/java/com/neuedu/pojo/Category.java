@@ -1,5 +1,7 @@
 package com.neuedu.pojo;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,15 @@ public class Category implements Serializable {
 
     public Category() {
     }
+@PostConstruct
+    public void init(){
+        System.out.println("====category====init=====");
+    }
+@PreDestroy
+    public void destory(){
+        System.out.println("====category====destory=====");
+    }
+
 
     public Category(Integer id, Integer parent_id, List<Product> productList, String name, Integer status, Integer sort_order, Date create_time, Date update_time) {
         this.id = id;

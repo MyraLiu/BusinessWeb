@@ -49,17 +49,18 @@
 
     autowire=""   byName (id名)  byType（类型唯一）  constructor（找对应类型的构造方法）
     -->
-    <bean id="categoryDaoImpl" class="com.neuedu.dao.impl.CategoryDaoImpl" init-method="init" destroy-method="destory" scope="singleton"
+<!--    <bean id="categoryDaoImpl" class="com.neuedu.dao.impl.CategoryDaoImpl" init-method="init" destroy-method="destory" scope="singleton"
     autowire="constructor">
 
        <property name="categoryId" value="1232" ></property>
-       <property name="category" ref="category" ></property>
+       <property name="category" ref="category1" ></property>
         <constructor-arg index="0" value="22"></constructor-arg>
 
 
-    </bean>
+    </bean>-->
 
-
+    <!--基于注解的配置@Resource-->
     <bean id="category" class="com.neuedu.pojo.Category"></bean>
+    <!--<bean id="category2" class="com.neuedu.pojo.Category"></bean>-->
 </beans>
 

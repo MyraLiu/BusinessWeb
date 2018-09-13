@@ -7,13 +7,29 @@ import org.apache.ibatis.javassist.CtBehavior;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.annotation.Resources;
 import java.util.*;
 
 @Repository
+@Scope("prototype")
+/*@Scope("singleton")
+com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4
+        com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4
+        true
+        ====Category====null
+        =======com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4*/
+/*@Scope("prototype")
+com.neuedu.dao.impl.CategoryDaoImpl@173ed316
+        com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4
+        false
+        ====Category====null
+        =======com.neuedu.dao.impl.CategoryDaoImpl@173ed316*/
 public class CategoryDaoImpl implements ICategoryDao {
 
     @Autowired
@@ -22,7 +38,7 @@ public class CategoryDaoImpl implements ICategoryDao {
     private int categoryId;
     /*@Autowired
     @Qualifier("category1")*/
-    //@Resource(name="category1")
+    @Resource(name="category")
     private Category category;
 
 
@@ -30,19 +46,19 @@ public class CategoryDaoImpl implements ICategoryDao {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
 
     //
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public CategoryDaoImpl(Category category) {
-        this.category = category;
-        System.out.println("======CategoryDaoImpl==Category====");
-    }
+//    public CategoryDaoImpl(Category category) {
+//        this.category = category;
+//        System.out.println("======CategoryDaoImpl==Category====");
+//    }
 
     public int getCategoryId() {
         return categoryId;
@@ -56,11 +72,11 @@ public class CategoryDaoImpl implements ICategoryDao {
     public CategoryDaoImpl() {
         System.out.println("======CategoryDaoImpl构造方法==无参===");
     }
-
+@PostConstruct
     public void init() {
         System.out.println("======CategoryDaoImpl-init方法=====");
     }
-
+@PreDestroy
     public void destory() {
         System.out.println("======CategoryDaoImpl-destory方法=====");
     }
