@@ -42,9 +42,9 @@ public class ProductController {
     }
 
 
-    //向前端返回值--实现方式2
+    //向前端返回值--实现方式2   ,defaultValue = "0"
     @RequestMapping("/findbymodel")
-    public String findProduct(@RequestParam("productid") int productid, Model model) {
+    public String findProduct(@RequestParam(value = "productid",required = false) Integer productid, Model model) {
         Product product = new Product();
         product.setId(productid);
         model.addAttribute("product", product);
@@ -77,7 +77,7 @@ public class ProductController {
     //通过springMVC给前端返回json格式的数据
 
     @RequestMapping("/findbyjson")
-//    @ResponseBody              // 返回格式 {"id":1211211112}
+   @ResponseBody              // 返回格式 {"id":1211211112}
     public Product findProduct(@RequestParam("productid") int productid) {
         Product product = new Product();
         product.setId(productid);
@@ -88,7 +88,7 @@ public class ProductController {
     //返回json数组
     @RequestMapping("/findallbyjson")
  @ResponseBody    // 返回格式 [{"id":1211211112}]
-    public List<Product> findAllProduct(@RequestParam("productid") int productid) {
+    public List<Product> findAllProduct() {
         Product product = new Product();
         product.setId(1000);
         List<Product> list = new ArrayList<>();
@@ -100,7 +100,7 @@ public class ProductController {
 
     // restful 以资源为导向的请求方式
     @RequestMapping(value = "/{operation}/{productid}")
-    @ResponseBody    // 返回格式 [{"id":1211211112}]
+    @ResponseBody    // 返回j'son格式 [{"id":1211211112}]
     public Product findProductById(@PathVariable("operation") int operation,@PathVariable("productid") int productid) {
         Product product = new Product();
         product.setId(productid);
@@ -113,10 +113,27 @@ public class ProductController {
     public String forward(){
 //        配置请求分派
         System.out.println("===========forward===========");
-        return "forward:findallbyjson";
+//        return "forward:findallbyjson";
+        return"forward:2/4";
+
     }
     /*也可以这样定义新的方法
     * public String forward(HttpServletRequest request){
 //        配置请求分派
     * */
+
+
+
+    /**
+     * 重定向*/
+    @RequestMapping(value="/redirect")
+    public String redirect(){
+//        配置请求分派
+        System.out.println("===========redirect===========");
+//        return "forward:findallbyjson";
+        return"redirect:2/4";
+
+    }
+
+
 }
