@@ -448,7 +448,6 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-
         IUserService userService = new UserServiceImpl();
         UserInfo userInfo = userService.login(username, MD5Utils.GetMD5Code(password));
         //如果查询到信息
@@ -456,19 +455,20 @@ public class UserServlet extends HttpServlet {
 
             //token
             String macAddress = IpUtils.getMACAddress(IpUtils.getRemoteAddress(request));
-//            System.out.println(token);
+            System.out.println(macAddress);
             String token = MD5Utils.GetMD5Code(macAddress);
             Cookie tokenCookie = new Cookie(Const.TOKENCOOKIE, token);
-            tokenCookie.setMaxAge(600);
+            tokenCookie.setMaxAge(7*24*3600);
             response.addCookie(tokenCookie);
             String sql = "update neuedu_user set token = ? where id = ?;";
+            System.out.println(sql);
             boolean updateFlag = DBUtils.updateDB(sql, token, userInfo.getId());
             if (updateFlag) {
                 System.out.println("修改成功");
             } else {
                 System.out.println("修改不成功");
             }
-
+            System.out.println(3);
             //保存登录信息 keep the user login message in session
 
 //            httpSession.setAttribute(Const.CURRENTUSER, userInfo);
@@ -494,7 +494,7 @@ public class UserServlet extends HttpServlet {
             String json = gson.toJson(userInfo);
             UserInfo user = gson.fromJson(json, UserInfo.class);
             //dataType为json时允许跨域的设置
-//            response.setHeader("Access-Control-Allow-Origin","*");
+//            JSON格式数据，修改servlet端程序response.setHeader("Access-Control-Allow-Origin","*");
 
 
 // jsonp时允许跨域方式对应的请求和响应格式

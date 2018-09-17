@@ -37,6 +37,30 @@ public class ServerResponse<T> {
         this.msg = msg;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     //提供新建对象的方法
     public static <T>ServerResponse<T> createServerResponce(int status){
         return new ServerResponse<T>(status);
@@ -45,6 +69,8 @@ public class ServerResponse<T> {
     public static <T>ServerResponse<T> createServerResponce(int status,String msg){
         return new ServerResponse<T>(status,msg);
     }
+
+
 
     public static <T>ServerResponse<T> createServerResponce(int status,T data){
         return new ServerResponse<T>(status,data);

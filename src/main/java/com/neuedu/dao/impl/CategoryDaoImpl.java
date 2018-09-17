@@ -17,57 +17,12 @@ import javax.annotation.Resources;
 import java.util.*;
 
 @Repository
-@Scope("prototype")
-/*@Scope("singleton")
-com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4
-        com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4
-        true
-        ====Category====null
-        =======com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4*/
-/*@Scope("prototype")
-com.neuedu.dao.impl.CategoryDaoImpl@173ed316
-        com.neuedu.dao.impl.CategoryDaoImpl@25ce9dc4
-        false
-        ====Category====null
-        =======com.neuedu.dao.impl.CategoryDaoImpl@173ed316*/
 public class CategoryDaoImpl implements ICategoryDao {
 
     @Autowired
     private SqlSession sqlSession;
 
-    private int categoryId;
-    /*@Autowired
-    @Qualifier("category1")*/
-    @Resource(name="category")
-    private Category category;
 
-
-    public Category getCategory() {
-        return category;
-    }
-
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
-
-    //
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-//    public CategoryDaoImpl(Category category) {
-//        this.category = category;
-//        System.out.println("======CategoryDaoImpl==Category====");
-//    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public CategoryDaoImpl(int categoryId) {
-        this.categoryId = categoryId;
-        System.out.println("======CategoryDaoImpl构造方法==categoryId===");
-    }
 
     public CategoryDaoImpl() {
         System.out.println("======CategoryDaoImpl构造方法==无参===");
@@ -104,7 +59,7 @@ public class CategoryDaoImpl implements ICategoryDao {
         map.put("parentid", parent_id);
         map.put("categoryname", name);
         int result = sqlSession.insert("com.neuedu.dao.ICategoryDao.addCategory", map);
-        sqlSession.commit();
+//        sqlSession.commit();
         return result;
 
     }
@@ -116,7 +71,7 @@ public class CategoryDaoImpl implements ICategoryDao {
         map.put("categoryid", categoryid);
         map.put("categoryname", newname);
         int result = sqlSession.update("com.neuedu.dao.ICategoryDao.updateCategoryName", map);
-        sqlSession.commit();
+//        sqlSession.commit();
         return result;
     }
 

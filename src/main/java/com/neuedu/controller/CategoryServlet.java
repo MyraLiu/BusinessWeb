@@ -100,7 +100,7 @@ public class CategoryServlet extends HttpServlet {
         ICategoryService cs = new CategoryServiceImpl();
         try {
             int _parentid = Integer.parseInt(parentid);
-            int result =cs.addCategory(_parentid,categoryname);
+            int result =cs.addCategory1(_parentid,categoryname);
             if(result>0) {
                 ServerResponse sr = ServerResponse.createServerResponce(0,"新分类添加成功");
                 ServerResponse.convert2Json(sr, response);
@@ -140,7 +140,7 @@ public class CategoryServlet extends HttpServlet {
         ICategoryService cs = new CategoryServiceImpl();
         try {
             int _categoryid = Integer.parseInt(categoryid);
-            int result =cs.addCategory(_categoryid,categoryname);
+            int result =cs.addCategory1(_categoryid,categoryname);
             if(result>0) {
                 ServerResponse sr = ServerResponse.createServerResponce(0,"分类名称修改成功");
                 ServerResponse.convert2Json(sr, response);

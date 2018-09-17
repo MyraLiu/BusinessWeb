@@ -17,7 +17,7 @@ public interface ICategoryService {
     /**
      * 添加分类
      * */
-    int addCategory(int parent_id,String name);
+    ServerResponse<String> addCategory(int parent_id,String name);
 
     /**
      * 修改品类的名字
@@ -28,5 +28,5 @@ public interface ICategoryService {
      * 查询全部子分类的id
      */
     ServerResponse findAllSubCategory(int id);
-
+    int addCategory1(int parent_id, String name);
 }

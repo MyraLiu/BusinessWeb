@@ -8,14 +8,16 @@ import com.neuedu.dao.impl.UserDaoImpl;
 import com.neuedu.exception.BusinesseLoginException;
 import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
-
+@Service
 public class UserServiceImpl implements IUserService{
-
-    IUserDao userDao = new UserDaoImpl();
+@Autowired
+    IUserDao userDao ;
 
 
 
@@ -133,6 +135,11 @@ public class UserServiceImpl implements IUserService{
     public int updateTokenById(int userid,String token){
 
         return userDao.updateTokenByID(userid,token);
+    }
+
+    @Override
+    public boolean isAdminRole(UserInfo user) {
+        return user.getRole()==0;
     }
 
 }

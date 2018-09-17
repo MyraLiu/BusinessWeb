@@ -11,11 +11,56 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-   <mvc:annotation-driven />
+    <!--开启注解-->
+
+            <mvc:annotation-driven>
+
+            </mvc:annotation-driven>
+
+    <!--打开扫描的基础包-->
     <context:component-scan base-package="com.neuedu"/>
+
+
+
+    <!-- 文件上传的试图解析器 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为5MB -->
+        <property name="maxUploadSize">
+            <value>5242880</value><!--设置上传图片的最大尺寸-->
+        </property>
+    </bean>
+
+    <!--注册拦截器-->
+    <!--<mvc:interceptors>-->
+        <!--<bean class="com.neuedu.handler.TestHandler"></bean>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="viewAll.form"/>-->
+            <!--<bean class="com.imooc.test.interceptor.Test1Interceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+
+  <!--  <mvc:resources mapping="/static/**/" location="/WEB-INF/static/">
+    </mvc:resources>-->
+    <!--支持Json的Bean,配置ViewResolver。 可以用多个ViewResolver。 使用order属
+性排序。 InternalResourceViewResolver放在最后。 -->
+   <!-- <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1" />
+        <property name="defaultViews">
+            <list>
+                &lt;!&ndash; JSON View &ndash;&gt;
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                </bean>
+            </list>
+        </property>
+    </bean>-->
+
+
+
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/><!--前缀--><!--WEB-INF目录要安全-->
+        <property name="suffix" value=".jsp"/><!--后缀-->
     </bean>
 </beans>

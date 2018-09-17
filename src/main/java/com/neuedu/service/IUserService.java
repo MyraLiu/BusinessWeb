@@ -58,4 +58,12 @@ public interface IUserService {
     int updatePassword(HttpSession session,String username,String  newPassword);
 
     int updateTokenById(int userid,String token);
+
+    /**
+     * 检验用户权限
+     * 单一职责
+     * @return
+     */
+    boolean isAdminRole(UserInfo user );
+
 }

@@ -59,8 +59,8 @@
 
     </bean>-->
 
-
-    <!--<bean id="category" class="com.neuedu.pojo.Category"></bean>-->
+    <!--基于注解的配置@Resource-->
+    <bean id="category" class="com.neuedu.pojo.Category"></bean>
     <!--<bean id="category2" class="com.neuedu.pojo.Category"></bean>-->
 </beans>
 

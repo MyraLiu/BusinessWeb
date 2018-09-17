@@ -12,13 +12,14 @@ import java.util.List;
 @Controller
 public class CateController {
 //以下为老师测试代码，暂时取消
-/*    @Autowired
-    ICategoryService categoryService;
-    @RequestMapping(value = "/find")
-    public void test(@RequestParam("id") Integer id){
-
-        List<Category> category=categoryService.findSubCategoryById(id);
-        System.out.println("==="+category);
-    }*/
+//    @Autowired
+//    ICategoryService categoryService;
+//    @RequestMapping(value = "/find")
+//    public String test(@RequestParam("id") Integer id){
+//
+//        List<Category> category=categoryService.findSubCategoryById(id);
+//        System.out.println("==="+category);
+//        return "findcategory";
+//    }
 
 }

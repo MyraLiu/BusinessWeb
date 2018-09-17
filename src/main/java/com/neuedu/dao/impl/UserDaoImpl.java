@@ -4,6 +4,7 @@ import com.neuedu.common.DBUtils;
 import com.neuedu.common.JDBCUtils;
 import com.neuedu.dao.IUserDao;
 import com.neuedu.pojo.UserInfo;
+import org.springframework.stereotype.Repository;
 
 import javax.xml.transform.Result;
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
+@Repository
 public class UserDaoImpl implements IUserDao {
 
 
