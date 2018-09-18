@@ -7,6 +7,7 @@ public enum ResponseCode {
     SUCCESS(0,"成功"),
     NEED_LOGIN(1,"需要登录"),
     NO_PERMISSION(2,"无权限"),
+    GETSUBCATEGORY_NEED_CATEGORYID(3,"categoryid必须"),
     FAIL(100,"失败");
 
 

@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-@Repository
+
 public class UserDaoImpl implements IUserDao {
 
 
@@ -45,7 +45,7 @@ public class UserDaoImpl implements IUserDao {
                 user.setUsername(_username);
                 user.setPassword(_password);
                 user.setEmail(email);
-                user.setPassword(phone);
+                user.setPhone(phone);
                 user.setQuestion(question);
                 user.setAnswer(answer);
                 user.setRole(role);
@@ -165,9 +165,10 @@ public class UserDaoImpl implements IUserDao {
         try {
             connection = JDBCUtils.getConnection();
 //            System.out.println("connection = " + connection);
-            String sql = "select count(1) from neuedu_user where username=?;";
+            String sql = "select count(1) from neuedu_user where username=? or email = ?;";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
+            preparedStatement.setString(2, username);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
                 int count = resultSet.getInt(1);

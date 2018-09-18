@@ -1,15 +1,18 @@
 package com.neuedu.service;
 
+import com.neuedu.common.ServerResponse;
 import com.neuedu.pojo.UserInfo;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 public interface IUserService {
+   int checkUsername(String username);
+
     /**
      * 登录
      */
-    UserInfo login(String username ,String Password);
+    ServerResponse<UserInfo> login(String username ,String Password);
 
     /**
      * 利用token的自动登录
@@ -20,11 +23,10 @@ public interface IUserService {
 
     /**
      * 注册
-     * @param session
      * @param userInfo
      * @return
      */
-    boolean register(HttpSession session, UserInfo userInfo);
+    ServerResponse<UserInfo> register(UserInfo userInfo);
 
     /**
      * 根据用户名查找找回密码问题
@@ -32,30 +34,22 @@ public interface IUserService {
      * @param username
      * @return
      */
-    String findQuestionByUsername(HttpSession session,String username);
+    ServerResponse<String> findQuestionByUsername(HttpSession session,String username);
 
     /**
      * 校验问题及答案
-     * @param session
      * @param username
      * @param question
      * @param answer
      * @return
      */
-    String  checkAnswer(HttpSession session,String username,String question,String answer);
-
-    /**
-     * 修改密码
-     * @param session
-     * @param username
-     * @param newPassword
-     * @param token
-     * @return
-     */
-    int updatePassword(HttpSession session,String username,String  newPassword,String token);
+    ServerResponse<String>  checkAnswer(String username,String question,String answer);
 
 
-    int updatePassword(HttpSession session,String username,String  newPassword);
+    ServerResponse<String> updatePassword(String username,String  newPassword,String token);
+
+
+     ServerResponse<UserInfo> updatePassword(String oldPassword, String  newPassword,UserInfo user);
 
     int updateTokenById(int userid,String token);
 

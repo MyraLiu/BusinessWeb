@@ -13,7 +13,7 @@ public interface ICategoryService {
     /**
      * 查询子分类
      * */
-    List<Category> findSubCategoryById(int id);
+    ServerResponse<List<Category>> findSubCategoryById(int id);
     /**
      * 添加分类
      * */
@@ -22,11 +22,11 @@ public interface ICategoryService {
     /**
      * 修改品类的名字
      * */
-    int updateCategoryName(int categoryid,String name);
+    ServerResponse<String> updateCategoryName(int categoryid,String name);
 
     /**
      * 查询全部子分类的id
      */
-    ServerResponse findAllSubCategory(int id);
+    ServerResponse<Set<Category>> findAllSubCategory(int id);
     int addCategory1(int parent_id, String name);
 }

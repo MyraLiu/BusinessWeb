@@ -7,15 +7,19 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Repository
 public class UserDaoMyBatisImpl implements IUserDao{
 
+    @Autowired
+    private  SqlSession sqlSession ;
     @Override
     public UserInfo login(String username, String password) {
 //        String configfile = "mybatis-config.xml";
@@ -39,7 +43,7 @@ public class UserDaoMyBatisImpl implements IUserDao{
 //            }
 //        }
 //简单封装
-        SqlSession sqlSession =MyBatisUtils.getSqlSession();
+
         Map<String,String> map= new HashMap<>();
             map.put("username",username);
             map.put("password",password);
@@ -61,7 +65,6 @@ public class UserDaoMyBatisImpl implements IUserDao{
 
     @Override
     public int checkUsername(String username) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         int result = sqlSession.selectOne("com.neuedu.dao.IUserDao.checkUsername",username);
         return result;
     }
@@ -74,7 +77,6 @@ public class UserDaoMyBatisImpl implements IUserDao{
     @Override
     public boolean register(UserInfo user) {
 
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         int i=sqlSession.insert("com.neuedu.dao.IUserDao.register",user);
         sqlSession.commit();//增删改需要手动提交事务
         sqlSession.close();
@@ -118,34 +120,29 @@ public class UserDaoMyBatisImpl implements IUserDao{
 
     @Override
     public List<UserInfo> findAll() {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         List<UserInfo> listu =sqlSession.selectList("com.neuedu.dao.IUserDao.findAll");
         return listu;
     }
 
     @Override
     public List<UserInfo> findAllByUsername(String username) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         List<UserInfo> listu =sqlSession.selectList("com.neuedu.dao.IUserDao.findAllByUsername",username);
         return listu;
     }
 
     @Override
     public UserInfo findByOption(UserInfo user) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
 
         return sqlSession.selectOne("com.neuedu.dao.IUserDao.findByOption",user);
     }
 
     @Override
     public List<UserInfo> findByIds(List<Integer> listid) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         return sqlSession.selectList("com.neuedu.dao.IUserDao.findByIds",listid);
     }
 
     @Override
     public int updateUser(UserInfo user) {
-        SqlSession sqlSession = MyBatisUtils.getSqlSession();
         int result = sqlSession.update("com.neuedu.dao.IUserDao.updateUser",user);
 
         sqlSession.commit();

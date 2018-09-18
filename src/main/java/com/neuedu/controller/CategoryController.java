@@ -24,12 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-    //@Autowired
-    private IUserService userService = new UserServiceImpl();
+    @Autowired
+    private IUserService userService;
     @Autowired
     private ICategoryService categoryService;
 
@@ -44,26 +45,20 @@ public class CategoryController {
     protected ServerResponse<String> addCategory(@RequestParam(name = "parentid", required = true, defaultValue = "0") Integer parentid,
                                                  @RequestParam(name = "categoryname", required = true) String categoryname, HttpSession session) {
 
-        ServerResponse<String> stringServerResponse = categoryService.addCategory(parentid, categoryname);
-        System.out.println("=========servres==" + stringServerResponse);
-         // Fixme :报错serverResponse无法转换为json，测试用
-        // return stringServerResponse;
-        // TODO ： 这里需要用户登录，我需要修改userController以后才可以继续
         //必须要登录-判断用户是否登录
-        //03-06:41
         UserInfo user = (UserInfo) session.getAttribute(Const.CURRENTUSER);
-            if (user == null) {
-                return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
-            }
-            //必须要有管理员权限-判断用户是否有权限
-            //业务逻辑写到service层
-            if (userService.isAdminRole(user)) {
-                //有管理员权限，可以添加类别
-                return categoryService.addCategory(parentid,categoryname);
-            } else {
-                // 03-14:29
-                 return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(),ResponseCode.NO_PERMISSION.getMsg());
-            }
+        if (user == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+        }
+        //必须要有管理员权限-判断用户是否有权限
+        //业务逻辑写到service层
+        boolean isAdmin = userService.isAdminRole(user);
+        System.out.println(isAdmin);
+        if (isAdmin) {
+            return categoryService.addCategory(parentid, categoryname);
+        } else {
+            return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
+        }
 
     }
 
@@ -71,30 +66,29 @@ public class CategoryController {
     /**
      * 查询子分类
      *
-     * @param request
-     * @param response
      * @throws ServletException
      * @throws IOException
      */
+    @RequestMapping("findsubcategory")
+    protected ServerResponse<List<Category>> findSubCategory(Integer categoryid,HttpSession session)  {
 
-    protected void findSubCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String categoryid = request.getParameter("categoryid");
-        HttpSession session = request.getSession();
         if (categoryid == null || categoryid.equals("")) {
-            ServerResponse sr = ServerResponse.createServerResponce(1, "categoryid为必须参数");
-            ServerResponse.convert2Json(sr, response);
-            return;
+            return ServerResponse.createServerResponce(ResponseCode.GETSUBCATEGORY_NEED_CATEGORYID.getCode(), ResponseCode.GETSUBCATEGORY_NEED_CATEGORYID.getMsg());
         }
-
-        ICategoryService cs = new CategoryServiceImpl();
-        try {
-            int _categoryid = Integer.parseInt(categoryid);
-            List<Category> categorylist = cs.findSubCategoryById(_categoryid);
-            ServerResponse sr = ServerResponse.createServerResponce(0, categorylist, "数据获取成功");
-            ServerResponse.convert2Json(sr, response);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        //必须要登录-判断用户是否登录
+      UserInfo user = (UserInfo) session.getAttribute(Const.CURRENTUSER);
+        if (user == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+        }
+        //必须要有管理员权限-判断用户是否有权限
+        //业务逻辑写到service层
+        boolean isAdmin = userService.isAdminRole(user);
+        System.out.println(isAdmin);
+        if (isAdmin) {
+            return categoryService.findSubCategoryById(categoryid);
+        }else{
+            return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
         }
     }
 
@@ -105,42 +99,33 @@ public class CategoryController {
     /**
      * 修改分类节点名称
      *
-     * @param request
-     * @param response
      * @throws ServletException
      * @throws IOException
      */
+@RequestMapping("/updatecategoryname")
+    protected ServerResponse<String> updateCategoryName(Integer categoryid, String categoryname,HttpSession session) throws ServletException, IOException {
 
-    protected void updateCategoryName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String categoryid = request.getParameter("categoryid");
-        String categoryname = request.getParameter("categoryname");
-        HttpSession session = request.getSession();
         if (categoryid == null || categoryid.equals("")) {
-            ServerResponse sr = ServerResponse.createServerResponce(1, "categoryid为必须参数");
-            ServerResponse.convert2Json(sr, response);
-            return;
+            return ServerResponse.createServerResponce(1, "categoryid为必须参数");
         }
         if (categoryname == null || categoryname.equals("")) {
-            ServerResponse sr = ServerResponse.createServerResponce(1, "新名称不能为空");
-            ServerResponse.convert2Json(sr, response);
-            return;
+            return ServerResponse.createServerResponce(1, "新名称不能为空");
         }
+    //必须要登录-判断用户是否登录
+    UserInfo user = (UserInfo) session.getAttribute(Const.CURRENTUSER);
+    if (user == null) {
+        return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+    }
+    //必须要有管理员权限-判断用户是否有权限
+    //业务逻辑写到service层
+    boolean isAdmin = userService.isAdminRole(user);
+    System.out.println(isAdmin);
+    if (isAdmin) {
+        return categoryService.updateCategoryName(categoryid, categoryname);
+    }else{
+        return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
+    }
 
-
-        try {
-            int _categoryid = Integer.parseInt(categoryid);
-            int result = categoryService.addCategory1(_categoryid, categoryname);
-            if (result > 0) {
-                ServerResponse sr = ServerResponse.createServerResponce(0, "分类名称修改成功");
-                ServerResponse.convert2Json(sr, response);
-            } else {
-                ServerResponse sr = ServerResponse.createServerResponce(1, "分类名称修改失败");
-                ServerResponse.convert2Json(sr, response);
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -150,32 +135,30 @@ public class CategoryController {
      */
     /**
      * 查询所有分类子节点
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+
      */
 
-    protected void findAllSubCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected ServerResponse<Set<Category>> findAllSubCategory(Integer categoryid, HttpSession session) throws ServletException, IOException {
 
-        String categoryid = request.getParameter("categoryid");
-        HttpSession session = request.getSession();
+
         if (categoryid == null || categoryid.equals("")) {
-            ServerResponse sr = ServerResponse.createServerResponce(1, "categoryid为必须参数");
-            ServerResponse.convert2Json(sr, response);
-            return;
+            return ServerResponse.createServerResponce(1, "categoryid为必须参数");
+        }
+        //必须要登录-判断用户是否登录
+        UserInfo user = (UserInfo) session.getAttribute(Const.CURRENTUSER);
+        if (user == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+        }
+        //必须要有管理员权限-判断用户是否有权限
+        //业务逻辑写到service层
+        boolean isAdmin = userService.isAdminRole(user);
+        System.out.println(isAdmin);
+        if (isAdmin) {
+            return categoryService.findAllSubCategory(categoryid);
+        }else{
+            return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
         }
 
-        ICategoryService cs = new CategoryServiceImpl();
-        try {
-            int _categoryid = Integer.parseInt(categoryid);
-            List<Category> categorylist = cs.findSubCategoryById(_categoryid);
-            ServerResponse sr = ServerResponse.createServerResponce(0, categorylist, "数据获取成功");
-            ServerResponse.convert2Json(sr, response);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
     }
 
 

@@ -34,33 +34,40 @@ public class CategoryServiceImpl implements ICategoryService {
     }*/
 
     @Override
-    public List<Category> findSubCategoryById(int id) {
-        return   categoryDao.findSubCategoryById(id);
+    public ServerResponse<List<Category>> findSubCategoryById(int id) {
+        List<Category> listc = categoryDao.findSubCategoryById(id);
+        return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), listc, ResponseCode.SUCCESS.getMsg());
     }
 
     @Override
     public ServerResponse<String> addCategory(int parent_id, String name) {
-        int result = categoryDao.addCategory(parent_id,name);
-        if(result>0) {
-           return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(),ResponseCode.SUCCESS.getMsg());
-        }else{
-            return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(),ResponseCode.FAIL.getMsg());
+        int result = categoryDao.addCategory(parent_id, name);
+        if (result > 0) {
+            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg());
+        } else {
+            return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(), ResponseCode.FAIL.getMsg());
         }
     }
 
     public int addCategory1(int parent_id, String name) {
-        return categoryDao.addCategory(parent_id,name);
+        return categoryDao.addCategory(parent_id, name);
 
     }
 
     @Override
-    public int updateCategoryName(int categoryid, String name) {
-        return categoryDao.updateCategoryName(categoryid,name);
+    public ServerResponse<String> updateCategoryName(int categoryid, String name) {
+        int result = categoryDao.updateCategoryName(categoryid, name);
+        if (result <= 0) {
+            return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(), ResponseCode.FAIL.getMsg());
+        } else {
+            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg());
+        }
     }
 
     @Override
-    public ServerResponse findAllSubCategory(int id) {
-        return null;
+    public ServerResponse<Set<Category>> findAllSubCategory(int id) {
+        Set<Category> setc = categoryDao.findAllSubCategory(id);
+        return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), setc, ResponseCode.SUCCESS.getMsg());
     }
 
 
