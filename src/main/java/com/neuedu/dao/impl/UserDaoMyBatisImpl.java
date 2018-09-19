@@ -55,12 +55,16 @@ public class UserDaoMyBatisImpl implements IUserDao{
 
     @Override
     public UserInfo autoLogin(String token) {
-        return null;
+        UserInfo user = new UserInfo();
+        user.setToken(token);
+        return sqlSession.selectOne("com.neuedu.dao.findByOption",user);
     }
 
     @Override
     public UserInfo selectById(int id) {
-        return null;
+        UserInfo user = new UserInfo();
+        user.setId(id);
+        return sqlSession.selectOne("com.neuedu.dao.findByOption",user);
     }
 
     @Override
@@ -71,51 +75,69 @@ public class UserDaoMyBatisImpl implements IUserDao{
 
     @Override
     public int checkEmail(String email) {
-        return 0;
+        return sqlSession.selectOne("com.neuedu.dao.IUserDao.checkEmail",email);
     }
 
     @Override
     public boolean register(UserInfo user) {
 
         int i=sqlSession.insert("com.neuedu.dao.IUserDao.register",user);
-        sqlSession.commit();//增删改需要手动提交事务
-        sqlSession.close();
+
         return i>0;
     }
 
     @Override
     public UserInfo selectByUsername(String username) {
-        return null;
+        UserInfo user = new UserInfo();
+        user.setUsername(username);
+        return sqlSession.selectOne("com.neuedu.dao.IUserDao.findByOption",user);
     }
 
     @Override
     public UserInfo selectByemail(String email) {
-        return null;
+        UserInfo user = new UserInfo();
+        user.setEmail(email);
+        return sqlSession.selectOne("com.neuedu.dao.IUserDao.findByOption",user);
     }
 
     @Override
     public String findQuestionByUsername(String username) {
-        return null;
+        UserInfo user =sqlSession.selectOne("com.neuedu.dao.IUserDao.findAllByUsername",username);
+
+        return user.getQuestion();
     }
 
     @Override
     public String findQuestionByEmail(String email) {
-        return null;
+        UserInfo user =sqlSession.selectOne("com.neuedu.dao.IUserDao.findAllByUsername",email);
+
+        return user.getQuestion();
     }
 
     @Override
     public int checkAnswer(String username, String question, String answer) {
-        return 0;
+        UserInfo user = new UserInfo();
+        user.setUsername(username);
+        user.setQuestion(question);
+        user.setAnswer(answer);
+        return sqlSession.selectOne("com.neuedu.dao.IUserDao.checkAnswer",user);
     }
 
     @Override
     public int updatepassword(String username, String newPassword) {
-        return 0;
+        Map<String,String> map= new HashMap<>();
+        map.put("username",username);
+        map.put("password",newPassword);
+        return sqlSession.update("com.neuedu.dao.IUserDao.updatepassword",map);
     }
 
     @Override
     public int updateTokenByID(int userid, String token) {
-        return 0;
+
+        Map<String ,Object> map = new HashMap<>();
+        map.put("id",userid);
+        map.put("token",token);
+        return sqlSession.update("com.neuedu.dao.IUserDao.updateTokenByID",map);
     }
 
     @Override
@@ -144,14 +166,11 @@ public class UserDaoMyBatisImpl implements IUserDao{
     @Override
     public int updateUser(UserInfo user) {
         int result = sqlSession.update("com.neuedu.dao.IUserDao.updateUser",user);
-
-        sqlSession.commit();
-
         return result;
     }
 
     @Override
     public int insertUsers(List<UserInfo> users) {
-        return 0;
+        return sqlSession.insert("com.neuedu.dao.IUserDao.insertUsers",users);
     }
 }

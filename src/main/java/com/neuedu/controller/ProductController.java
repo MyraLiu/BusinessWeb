@@ -46,4 +46,10 @@ public class ProductController {
             return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(),ResponseCode.NO_PERMISSION.getMsg());
         }
     }
+
+
+/**
+ * 商品详情
+ */
+
 }

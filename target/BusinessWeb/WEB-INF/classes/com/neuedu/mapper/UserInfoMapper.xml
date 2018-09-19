@@ -51,6 +51,10 @@ password
 
     </select>
 
+    <select id="checkEmail" parameterType="string" resultType="int">
+        select count(1) from neuedu_user where email=#{email}
+    </select>
+
     <select id="findAll"  resultType="user">
 
          select id,username,password,email,phone,question,answer,role
@@ -72,14 +76,16 @@ password
 
         select id,username,password,email,phone,question,answer
         from neuedu_user
-        /*恒成立条件*/
+        where username=#{username}
+        or email=#{username}
+      <!--  /*恒成立条件*/
         <where>
         /*且条件*/
---      /*用where标记没有and   智能拼接*/
+&#45;&#45;      /*用where标记没有and   智能拼接*/
         <if test="_parameter!=null">
             username=#{username}
         </if>
-        </where>
+        </where>-->
     </select>
 
 
@@ -94,6 +100,9 @@ password
             </when>
             <when test="id!=null">
                 and id=#{id}
+            </when>
+            <when test="token!=null">
+                and token=#{token}
             </when>
             <otherwise>
                 and email=#{email}
@@ -133,7 +142,25 @@ password
 
     </update>
 
+<update id="updateTokenByID" parameterType="map" >
+    update neuedu_user
+    <set>
+        token=#{token}
+    </set>
+    <where>
+        id=#{id}
+    </where>
+</update>
 
+    <update id="updatepassword" parameterType="map">
+        update neuedu_user
+        <set>
+            password=#{password}
+        </set>
+        <where>
+            username=#{username}
+        </where>
+    </update>
 
 <select id="findByIds" parameterType="list" resultType="user">
 
@@ -154,6 +181,11 @@ password
             (#{username},#{password})
         </foreach>
     </insert>
+
+<select id="checkAnswer" parameterType="user" resultType="int">
+
+    select count(1) from neuedu_user where username=#{username} and question=#{question} and answer=#{answer}
+</select>
 
 
 </mapper>

@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -92,9 +93,7 @@ public class CategoryController {
         }
     }
 
-    /*
 
-     */
 
     /**
      * 修改分类节点名称
@@ -137,8 +136,8 @@ public class CategoryController {
      * 查询所有分类子节点
 
      */
-
-    protected ServerResponse<Set<Category>> findAllSubCategory(Integer categoryid, HttpSession session) throws ServletException, IOException {
+@RequestMapping("/findallchild")
+    protected ServerResponse<Set<Integer>> findAllSubCategory(Integer categoryid, HttpSession session) throws ServletException, IOException {
 
 
         if (categoryid == null || categoryid.equals("")) {
@@ -154,7 +153,10 @@ public class CategoryController {
         boolean isAdmin = userService.isAdminRole(user);
         System.out.println(isAdmin);
         if (isAdmin) {
-            return categoryService.findAllSubCategory(categoryid);
+            Set<Integer> set = new HashSet<>();
+            set = categoryService.findAllChildByCategory(set,categoryid);
+
+            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(),set,ResponseCode.SUCCESS.getMsg());
         }else{
             return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
         }

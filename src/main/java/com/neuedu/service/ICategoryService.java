@@ -29,4 +29,6 @@ public interface ICategoryService {
      */
     ServerResponse<Set<Category>> findAllSubCategory(int id);
     int addCategory1(int parent_id, String name);
+
+    public Set<Integer> findAllChildByCategory (Set<Integer> categorySet,Integer categoryid);
 }

@@ -71,4 +71,20 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
 
+    public Set<Integer> findAllChildByCategory (Set<Integer> categorySet,Integer categoryid){
+        Category category = categoryDao.findCategoryById(categoryid);
+        if(category!=null){
+            categorySet.add(categoryid);
+        }
+
+        List<Category> categoryList = categoryDao.findSubCategoryById(categoryid);
+        if(categoryList!=null&&categoryList.size()>0){
+            for (Category c:categoryList) {
+                findAllChildByCategory(categorySet,c.getId());
+            }
+        }
+        return categorySet;
+    }
+
+
 }
