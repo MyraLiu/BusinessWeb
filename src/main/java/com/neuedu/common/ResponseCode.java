@@ -8,6 +8,8 @@ public enum ResponseCode {
     NEED_LOGIN(1,"需要登录"),
     NO_PERMISSION(2,"无权限"),
     GETSUBCATEGORY_NEED_CATEGORYID(3,"categoryid必须"),
+    NEED_PRODUCT(5,"商品参数必传"),
+    NEED_PRODUCT_STATUS(6,"商品参数必须"),
     FAIL(100,"失败");
 
 

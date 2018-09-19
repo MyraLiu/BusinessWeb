@@ -15,7 +15,7 @@ import java.io.IOException;
  * 过滤manage下面的任意路径
  * 后台管理页面，需要登录的权限
  */
-@WebFilter("/manage/*")
+//@WebFilter("/manage/*")
 public class CheckFilter implements Filter {
     public void destroy() {
     }

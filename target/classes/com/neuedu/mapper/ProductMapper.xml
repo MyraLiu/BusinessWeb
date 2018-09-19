@@ -56,4 +56,52 @@
         where p.id=#{productid}
     </select>
 
+
+    <insert id="addProduct" parameterType="product" useGeneratedKeys="true" keyColumn="id">
+    insert into neuedu_product (category_id,name,subtitle,main_image,sub_images,detail,price,stock,status,create_time,update_time)
+   values (#{category_id} , #{name},#{subtitle},#{main_image},#{sub_images},#{detail},#{price},#{stock},#{status},now(),now())
+
+    </insert>
+
+    <update id="updateProduct" parameterType="product" >
+    UPDATE neuedu_product
+    <set>
+        <if test="category_id!=null">
+            category_id=#{category_id},
+        </if>
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="subtitle!=null">
+            subtitle=#{subtitle},
+        </if>
+        <if test="main_image!=null">
+            main_image=#{main_image},
+        </if>
+        <if test="sub_images!=null">
+            sub_images=#{sub_images},
+        </if>
+        <if test="detail!=null">
+            detail=#{detail},
+        </if>
+        <if test="price!=null">
+            price=#{price},
+        </if>
+        <if test="stock!=null">
+            stock=#{stock},
+        </if>
+        <if test="status!=null">
+            status=#{status},
+        </if>
+
+
+
+    </set>
+        <where>
+            id=#{id}
+        </where>
+
+    </update>
+    
+
 </mapper>

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/manage/*")
+//@WebFilter("/manage/*")
 public class AutoLoginFilter implements Filter {
     public void destroy() {
     }
