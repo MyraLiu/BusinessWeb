@@ -16,7 +16,7 @@ public class PropertiesUtils {
         }
     }
     //0919-02-24:44
-    public static String getProperty(){
-return null;
+    public static String getProperty(String key){
+        return p.getProperty(key);
     }
 }

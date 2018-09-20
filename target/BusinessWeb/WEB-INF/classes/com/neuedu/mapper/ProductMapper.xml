@@ -17,8 +17,8 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
 <!--命名空间：对应接口类-->
@@ -63,45 +63,91 @@
 
     </insert>
 
-    <update id="updateProduct" parameterType="product" >
-    UPDATE neuedu_product
-    <set>
-        <if test="category_id!=null">
-            category_id=#{category_id},
-        </if>
-        <if test="name!=null">
-            name=#{name},
-        </if>
-        <if test="subtitle!=null">
-            subtitle=#{subtitle},
-        </if>
-        <if test="main_image!=null">
-            main_image=#{main_image},
-        </if>
-        <if test="sub_images!=null">
-            sub_images=#{sub_images},
-        </if>
-        <if test="detail!=null">
-            detail=#{detail},
-        </if>
-        <if test="price!=null">
-            price=#{price},
-        </if>
-        <if test="stock!=null">
-            stock=#{stock},
-        </if>
-        <if test="status!=null">
-            status=#{status},
-        </if>
+    <update id="updateProduct" parameterType="product">
+        UPDATE neuedu_product
+        <set>
+            <if test="category_id!=null">
+                category_id=#{category_id},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="subtitle!=null">
+                subtitle=#{subtitle},
+            </if>
+            <if test="main_image!=null">
+                main_image=#{main_image},
+            </if>
+            <if test="sub_images!=null">
+                sub_images=#{sub_images},
+            </if>
+            <if test="detail!=null">
+                detail=#{detail},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <if test="stock!=null">
+                stock=#{stock},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
 
 
-
-    </set>
+        </set>
         <where>
             id=#{id}
         </where>
 
     </update>
-    
+
+    <!--查询列表-->
+    <select id="findProductByPageNo" parameterType="map" resultType="product">
+
+        select id ,category_id,name  ,subtitle,main_image,sub_images,price,stock,status ,create_time ,update_time
+          from neuedu_product
+        limit #{offSet},#{pageSize}
+    </select>
+
+
+
+    <select id="findTotalRecord" resultType="long">
+        select count(1) from neuedu_product
+    </select>
+
+
+    <select id="findTotalRecordByIdOrName" parameterType="map" resultType="long">
+        select count(1) from neuedu_product
+        <where>
+
+            <if test="productId!=null">
+                and id=#{productId}
+            </if>
+            <if test="productName!=null">
+                and name like #{productName}
+            </if>
+        </where>
+    </select>
+
+    <select id="findProductByIdOrName" parameterType="map" resultType="product">
+
+        select id,category_id,name  ,subtitle,main_image,sub_images,price,stock,status ,create_time ,update_time
+        from neuedu_product
+        <where>
+
+            <if test="productId!=null">
+                and id=#{productId}
+            </if>
+            <if test="productName!=null">
+                and name like #{productName}
+            </if>
+        </where>
+
+        limit #{offSet} , #{pageSize}
+
+    </select>
+
+
 
 </mapper>
