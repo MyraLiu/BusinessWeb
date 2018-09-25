@@ -20,6 +20,8 @@
         <typeAlias type="com.neuedu.pojo.UserInfo" alias="user"></typeAlias>
         <typeAlias type="com.neuedu.pojo.Product" alias="product"></typeAlias>
         <typeAlias type="com.neuedu.pojo.Category" alias="category"></typeAlias>
+        <typeAlias type="com.neuedu.pojo.Cart" alias="cart"></typeAlias>
+        <typeAlias type="com.neuedu.pojo.Shipping" alias="shipping"></typeAlias>
     </typeAliases>
 
     <!-- autoMappingBehavior should be set in each test case -->

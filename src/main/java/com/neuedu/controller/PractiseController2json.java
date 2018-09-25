@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller   //
+//@Controller   //
 //@RestController   // 所有方法的返回值均为 json格式
 //配置通用的访问路径
 //@RequestMapping(value = "/manage/product")
-@RequestMapping(value = "/product")
+//@RequestMapping(value = "/product")
 public class PractiseController2json {
 
     //配置多条访问路径，以及method访问方式,仅限post

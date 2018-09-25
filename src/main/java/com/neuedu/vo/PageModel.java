@@ -12,6 +12,16 @@ public class PageModel<T> implements Serializable {
     private  Boolean isFirst;
 //    是否为最后一页
     private Boolean isLast;
+    // 当前页
+    private Integer currentPage;
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
 
     public List<T> getData() {
         return data;

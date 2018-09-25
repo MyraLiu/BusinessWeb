@@ -4,6 +4,7 @@ import com.neuedu.common.ServerResponse;
 import com.neuedu.pojo.Product;
 import com.neuedu.vo.PageModel;
 import com.neuedu.vo.ProductVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,4 +39,23 @@ public interface IProductService {
      * @return
      */
     ServerResponse<PageModel<ProductVO>> findProductByIdOrName(Integer id, String name,Integer pageNo, Integer pageSize);
+
+
+    /**
+     * 图片上传
+     * @param upload
+     * @return
+     */
+    ServerResponse<String> upload(MultipartFile upload);
+
+    /**
+     * 前台查询商品详情
+     * @param productId
+     * @return
+     */
+    public ServerResponse<ProductVO> findProductDetail(Integer productId);
+
+
+
+    ServerResponse<PageModel<ProductVO>> seatchProducts(Integer categoryId,String productname,Integer pageNo,Integer pageSize,String orderby);
 }

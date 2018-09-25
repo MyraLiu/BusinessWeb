@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -30,9 +31,17 @@ public class ProductController {
      * 添加或者更新商品
      */
     @RequestMapping("/add")
-    public ServerResponse<String> addProduct(Product product) {
+    public ServerResponse<String> addProduct(Product product,HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(Const.CURRENTUSER);
+        if (userInfo == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+        }
+        if (userService.isAdminRole(userInfo)) {
+            return productService.addorupdateProduct(product);
+        } else {
+            return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
+        }
 
-        return productService.addorupdateProduct(product);
     }
 
 
@@ -98,7 +107,11 @@ public class ProductController {
      * @return
      */
     @RequestMapping("/search")
-    public ServerResponse<PageModel<ProductVO>> search(@RequestParam(required = false)Integer productid,@RequestParam(required = false)String productname,@RequestParam(defaultValue = "1")Integer pageno, @RequestParam(defaultValue = "1")Integer pagesize, HttpSession session){
+    public ServerResponse<PageModel<ProductVO>> search(@RequestParam(required = false)Integer productid,
+                                                       @RequestParam(required = false)String productname,
+                                                       @RequestParam(defaultValue = "1")Integer pageno,
+                                                       @RequestParam(defaultValue = "1")Integer pagesize,
+                                                       HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(Const.CURRENTUSER);
         if (userInfo == null) {
             return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
@@ -109,4 +122,21 @@ public class ProductController {
             return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
         }
     }
+
+
+
+    @RequestMapping("/upload")
+    public ServerResponse<String> upload(MultipartFile upload, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(Const.CURRENTUSER);
+        if (userInfo == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+        }
+        if (userService.isAdminRole(userInfo)) {
+            return productService.upload(upload);
+        } else {
+            return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(), ResponseCode.NO_PERMISSION.getMsg());
+        }
+    }
+
+
 }

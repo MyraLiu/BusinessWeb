@@ -150,4 +150,75 @@
 
 
 
+
+    <select id="findProductByIdAndOnline" parameterType="int" resultType="product">
+
+        select id,category_id,name  ,subtitle,main_image,sub_images,price,stock,status ,create_time ,update_time
+        from neuedu_product
+        <where>
+
+         id=#{productid} and status =1
+        </where>
+
+    </select>
+
+
+
+
+    <select id="findProductsByCategoryIdsAndProductName"  parameterType="map"  resultType="product">
+        select id,category_id,name  ,subtitle,main_image,sub_images,price,stock,status ,create_time ,update_time
+        from neuedu_product
+        <where>
+        status = 1
+        <if test="categoryIds!=null  and categoryIds.size>0">
+
+            and category_id IN
+            <foreach collection="categoryIds" item="category" open="("  close=")"   separator=",">
+                #{category}
+            </foreach>
+
+        </if>
+
+        <if test="productName!=null">
+            and name like #{productName}
+        </if>
+
+    </where>
+        <if test="sortnum==1">
+            order by price asc
+        </if>
+        <if test="sortnum==2">
+            order by price desc
+        </if>
+        limit #{offSet} ,#{pageSize}
+    </select>
+
+
+
+
+
+    <select id="findTotalRecordByIdsOrName" parameterType="map" resultType="long">
+        select count(1) from neuedu_product
+        <where>
+            status = 1
+            <if test="categoryIds!=null and categoryIds.size>0">
+
+                and category_id IN
+                <foreach collection="categoryIds" item="category" open="("  close=")"   separator=",">
+                    #{category}
+                </foreach>
+
+
+            </if>
+
+            <if test="productName!=null">
+                and name like #{productName}
+            </if>
+
+        </where>
+    </select>
+
+
+
+
 </mapper>

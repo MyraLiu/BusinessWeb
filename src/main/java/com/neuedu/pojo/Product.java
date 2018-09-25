@@ -5,19 +5,19 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product implements Serializable {
-    private Integer id;//` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
-    private Integer category_id;//` int(11) NOT NULL COMMENT '分类id,对应mmall_category表主键',
+    private Integer id;// '商品ID',
+    private Integer category_id;//  '分类id,对应mmall_category表主键',
     private Category category;
-    private String name;//` varchar(100) NOT NULL COMMENT '商品名称',
-    private String subtitle;//` varchar(200) DEFAULT NULL COMMENT '商品副标题',
-    private String main_image;//` varchar(500) DEFAULT NULL COMMENT '产品主图,url相对地址',
-    private String sub_images;//` text COMMENT '图片地址，json格式，扩展用',
-    private String detail;//` text COMMENT '商品详情',
-    private BigDecimal price;//` decimal(20,2) NOT NULL COMMENT '价格，单位-元保留两位小数',
-    private Integer stock;//` int(11) NOT NULL COMMENT '库存数量',
-    private Integer status;//` int(6) DEFAULT '1' COMMENT '商品状态 1-在售 2-下架 3-删除',
-    private Date create_time;//` datetime DEFAULT NULL COMMENT '创建时间',
-    private Date update_time;//` datetime DEFAULT NULL COMMENT '更新时间',
+    private String name;//  '商品名称',
+    private String subtitle;//  '商品副标题',
+    private String main_image;//  '产品主图,url相对地址',
+    private String sub_images;// '图片地址，json格式，扩展用',
+    private String detail;//  '商品详情',
+    private BigDecimal price;//  '价格，单位-元保留两位小数',
+    private Integer stock;//  '库存数量',
+    private Integer status;// '商品状态 1-在售 2-下架 3-删除',
+    private Date create_time;//  '创建时间',
+    private Date update_time;// '更新时间',
 
     public Product() {
     }
