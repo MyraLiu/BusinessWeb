@@ -24,7 +24,7 @@
 <!--命名空间：对应接口类-->
 <mapper namespace="com.neuedu.dao.IShippingDao">
 
-    <insert id="add" parameterType="shipping">
+    <insert id="add" parameterType="shipping" useGeneratedKeys="true" keyProperty="id">
         insert into neuedu_shipping
         ( user_id, receiver_name, receiver_phone, receiver_mobile,receiver_province,receiver_city,receiver_district,
           receiver_address,receiver_zip,create_time,update_time)
@@ -96,7 +96,7 @@
           receiver_address,receiver_zip,create_time,update_time
           from neuedu_shipping
           where user_id=#{userid}
-          <if test="ordery==101">
+          <if test="orderby==101">
               order by receiver_name asc
           </if>
         <if test="orderby==102">

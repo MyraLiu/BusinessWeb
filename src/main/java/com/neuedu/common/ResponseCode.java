@@ -14,6 +14,11 @@ public enum ResponseCode {
     PRODUCT_NOT_IN_CART(9,"购物车中没有商品信息"),
     SHIPPING_NEED_MESSAGE(10,"地址中必须包含接收人姓名，电话，具体地址信息"),
     NEED_SHIPPINGID(11,"地址id必须"),
+    NEED_ORDERNO(12,"订单号必须"),
+    NOT_FOUND_ORDERNO(13,"没有该订单"),
+    NO_ORDER_PERMISSION(14,"不支持的交易状态，交易返回异常!!!"),
+    UNKNOWN(90,"系统异常，预下单状态未知!!!"),
+    ORDER_FAIL(99,"支付宝预下单失败!!!"),
     FAIL(100,"失败");
 
 

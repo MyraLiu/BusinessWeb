@@ -33,8 +33,8 @@ public class ShippingServiceImpl implements IShippingService {
         int result = shippingDao.add(shipping);
 
         if (result > 0) {
-           Integer shippingid = shippingDao.findId(shipping);
-            String s = "shippingId : "+shippingid;
+//           Integer shippingid = shippingDao.findId(shipping);
+            String s = "shippingId : "+shipping.getId();
             return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), s, ResponseCode.SUCCESS.getMsg());
         } else {
             return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(), ResponseCode.FAIL.getMsg());
@@ -87,35 +87,41 @@ public class ShippingServiceImpl implements IShippingService {
 
     @Override
     public ServerResponse<ShippingListVO<ShippingVO>> list(Integer userid,Integer pageNum,Integer pageSize,String orderby) {
-
+// 排序规则
         Integer sortby = null;
         if(orderby!=null&&!orderby.equals("")){
             String[] order = orderby.split("_");
             if(order!=null&&order.length>0){
                 if(order[0].equals("name")&&order[1].equals("asc")){
                     sortby=101;
-                }else   if(order[0].equals("name")&&order[1].equals("desc")){
+                }else if(order[0].equals("name")&&order[1].equals("desc")){
                     sortby=102;
                 }
             }
         }
-
+        System.out.println(orderby);
+// 获取地址信息  并将地址转化为vo类
       List<Shipping> listshipping = shippingDao.list(userid,pageNum,pageSize,sortby);
       List<ShippingVO> listvo = new ArrayList<>();
       for(Shipping s:listshipping){
           ShippingVO svo = assembleVO(s);
           listvo.add(svo);
       }
+
+      // 创建地址列表vo类，每项赋值
       ShippingListVO<ShippingVO>  slvo = new ShippingListVO<>();
-      slvo.setList(listvo);
+      slvo.setPageNum(pageNum);
+      slvo.setPageSize(pageSize);
+      slvo.setOrderBy(orderby);
+            slvo.setList(listvo);
       int count = shippingDao.count(userid);
       slvo.setSize(count);
       slvo.setTotal(count);
       Integer pages;
       if(count%pageSize==0){
-          pages=count%pageSize;
+          pages=count/pageSize;
       }else{
-          pages=count%pageSize+1;
+          pages=count/pageSize+1;
       }
       slvo.setPages(pages);
         slvo.setFirstPage(1);
@@ -140,6 +146,17 @@ public class ShippingServiceImpl implements IShippingService {
           slvo.setHasNextPage(true);
       }
 
+        // 开始行 和终止行
+        if(count<=pageSize){
+          slvo.setStartRow(1);
+          slvo.setEndRow(count);
+        }else if(count>pageSize&&pageNum!=pages){
+          slvo.setStartRow((pageNum-1)*pageSize+1);
+          slvo.setEndRow(pageNum*pageSize);
+        }else if(pageNum==pages){
+            slvo.setStartRow((pageNum-1)*pageSize+1);
+            slvo.setEndRow((pageNum-1)*pageSize+count%pageSize);
+        }
 
         return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(),slvo,ResponseCode.SUCCESS.getMsg());
     }
