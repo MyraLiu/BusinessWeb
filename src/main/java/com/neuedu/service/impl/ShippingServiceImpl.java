@@ -20,7 +20,7 @@ public class ShippingServiceImpl implements IShippingService {
     private IShippingDao shippingDao;
 
     @Override
-    public ServerResponse<String> add(Shipping shipping) {
+    public ServerResponse<Integer> add(Shipping shipping) {
         // 非空判断
         if (shipping.getUser_id() == null || shipping.getReceiver_name() == null
                 || (shipping.getReceiver_mobile() == null && shipping.getReceiver_phone() == null)
@@ -34,8 +34,8 @@ public class ShippingServiceImpl implements IShippingService {
 
         if (result > 0) {
 //           Integer shippingid = shippingDao.findId(shipping);
-            String s = "shippingId : "+shipping.getId();
-            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), s, ResponseCode.SUCCESS.getMsg());
+            String s =""+shipping.getId();
+            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), shipping.getId(), ResponseCode.SUCCESS.getMsg());
         } else {
             return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(), ResponseCode.FAIL.getMsg());
         }

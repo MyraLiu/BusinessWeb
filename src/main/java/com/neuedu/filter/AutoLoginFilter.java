@@ -18,6 +18,7 @@ public class AutoLoginFilter implements Filter {
     public void destroy() {
     }
 
+
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         //强转为子类
         HttpServletRequest request = (HttpServletRequest) req;

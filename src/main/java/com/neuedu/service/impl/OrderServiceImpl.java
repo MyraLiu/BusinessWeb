@@ -23,13 +23,24 @@ import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
 import com.alipay.demo.trade.utils.ZxingUtils;
+import com.neuedu.businessconst.Const;
+import com.neuedu.common.*;
 import com.neuedu.common.BigDecimalUtils;
+import com.neuedu.common.DateUtils;
 import com.neuedu.common.ResponseCode;
 import com.neuedu.common.ServerResponse;
+import com.neuedu.dao.ICartDao;
 import com.neuedu.dao.IOrderDao;
+import com.neuedu.dao.IProductDao;
+import com.neuedu.dao.IShippingDao;
+import com.neuedu.pojo.Cart;
 import com.neuedu.pojo.Order;
 import com.neuedu.pojo.OrderItem;
+import com.neuedu.pojo.Pay;
 import com.neuedu.service.IOrderService;
+import com.neuedu.service.IShippingService;
+import com.neuedu.vo.OrderItemVO;
+import com.neuedu.vo.OrderVO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,6 +58,14 @@ public class OrderServiceImpl implements IOrderService
 
     @Autowired
     private IOrderDao orderDao;
+    @Autowired
+    private IShippingDao shippingDao;
+    @Autowired
+    private ICartDao cartDao;
+    @Autowired
+    private IProductDao productDao;
+    @Autowired
+    private IShippingService shippingService;
 
 
     @Override
@@ -85,7 +104,7 @@ public class OrderServiceImpl implements IOrderService
         String sellerId = "";
 
         // 订单描述，可以对交易或商品进行一个详细地描述，比如填写"购买商品2件共15.00元"
-        String body = "订单号："+order.getOrder_no()+",消费："+order.getPayment();
+        String body = "订单号：" + order.getOrder_no() + ",消费：" + order.getPayment();
 
         // 商户操作员编号，添加此参数可以为商户操作员做销售统计
         String operatorId = "ED-01";
@@ -103,18 +122,19 @@ public class OrderServiceImpl implements IOrderService
         // 商品明细列表，需填写购买商品详细信息，
         List<GoodsDetail> goodsDetailList = new ArrayList<GoodsDetail>();
         // 根据订单编号查询订单明细
-        List<OrderItem> listoi=orderDao.findOrderByOrderNo(orderid);
-        for(OrderItem orderItem:listoi){
+        List<OrderItem> listoi = orderDao.findOrderItemByOrderNo(orderid);
+        for (OrderItem orderItem : listoi) {
             // 创建一个商品信息，参数含义分别为商品id（使用国标）、名称、单价（单位为分）、数量，如果需要添加商品类别，详见GoodsDetail
 
             GoodsDetail goods = GoodsDetail.newInstance(String.valueOf(orderItem.getProduct_id()),
-                                                        orderItem.getProduct_name(),
-                                                        BigDecimalUtils.multiply(orderItem.getTotal_price(),new BigDecimal(100)).longValue(),
-                                                        orderItem.getQuantity());
+                    orderItem.getProduct_name(),
+                    BigDecimalUtils.multiply(orderItem.getCurrent_unit_price(), new BigDecimal(100)).longValue(),
+                    orderItem.getQuantity());
             // 创建好一个商品后添加至商品明细列表
             goodsDetailList.add(goods);
 
         }
+
 
         // 创建扫码支付请求builder，设置请求参数
         AlipayTradePrecreateRequestBuilder builder = new AlipayTradePrecreateRequestBuilder()
@@ -123,7 +143,7 @@ public class OrderServiceImpl implements IOrderService
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
                 //支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
-                .setNotifyUrl("http://c3auda.natappfree.cc/BusinessWeb/order/callback.do")
+                .setNotifyUrl("http://vzjsdq.natappfree.cc/BusinessWeb/order/callback.do")
                 .setGoodsDetailList(goodsDetailList);
 
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
@@ -139,35 +159,269 @@ public class OrderServiceImpl implements IOrderService
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
-                Map<String,Object> map = new HashMap<>();
-                map.put("订单编号",response.getOutTradeNo());
-                map.put("二维码地址",String.format("http://localhost:8080/uploadpic/qr-%s.png", response.getOutTradeNo()));
-               return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(),map,ResponseCode.SUCCESS.getMsg());
+
+                // 封装订单状态
+                Map<String, Object> map = new HashMap<>();
+                map.put("订单编号", response.getOutTradeNo());
+                map.put("二维码地址", String.format("http://localhost:8080/uploadpic/qr-%s.png", response.getOutTradeNo()));
+                map.put("商品信息", goodsDetailList);
+                map.put("总价格", order.getPayment());
+                map.put("地址信息", shippingDao.find(order.getShipping_id()));
+                map.put("创建时间", order.getCreate_time());
+                map.put("订单状态", order.getStatus());
+
+
+                return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), map, ResponseCode.SUCCESS.getMsg());
 
             case FAILED:
                 log.error("支付宝预下单失败!!!");
-                return ServerResponse.createServerResponce(ResponseCode.ORDER_FAIL.getCode(),ResponseCode.ORDER_FAIL.getMsg());
+                return ServerResponse.createServerResponce(ResponseCode.ORDER_FAIL.getCode(), ResponseCode.ORDER_FAIL.getMsg());
 
             case UNKNOWN:
                 log.error("系统异常，预下单状态未知!!!");
-                return ServerResponse.createServerResponce(ResponseCode.UNKNOWN.getCode(),ResponseCode.UNKNOWN.getMsg());
+                return ServerResponse.createServerResponce(ResponseCode.UNKNOWN.getCode(), ResponseCode.UNKNOWN.getMsg());
 
 
             default:
                 log.error("不支持的交易状态，交易返回异常!!!");
-                return ServerResponse.createServerResponce(ResponseCode.NO_ORDER_PERMISSION.getCode(),ResponseCode.NO_ORDER_PERMISSION.getMsg());
+                return ServerResponse.createServerResponce(ResponseCode.NO_ORDER_PERMISSION.getCode(), ResponseCode.NO_ORDER_PERMISSION.getMsg());
 
         }
 
     }
 
     @Override
-    public void queryOrderPayStatus(Long orderid) {
+    public ServerResponse<Boolean> queryOrderPayStatus(Long orderid) {
 
+        if (orderid == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NOT_FOUND_ORDERNO.getCode(), ResponseCode.NOT_FOUND_ORDERNO.getMsg());
+        }
+        Order order = orderDao.findOrderByOrderNo(orderid);
+        if (order == null) {
+            return ServerResponse.createServerResponce(ResponseCode.NOT_FOUND_ORDERNO.getCode(), ResponseCode.NOT_FOUND_ORDERNO.getMsg());
+
+        }
+        if (order.getStatus() >= 20) {
+
+            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), true, ResponseCode.SUCCESS.getMsg());
+        }
+        return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), false, ResponseCode.SUCCESS.getMsg());
     }
 
     @Override
-    public void callback(Long orderid) {
+    public String callback(Map<String, String> map) {
+        // 1. 获取订单号，查询订单
+        Long orderno = Long.parseLong(map.get("out_trade_no"));
+        String trade_status = map.get("trade_status");
+        String trade_no = map.get("trade_no");
+        Order order = orderDao.findOrderByOrderNo(orderno);
+
+        System.out.println(orderno + "======orderno");
+        // 2. 获取支付状态，修改订单表中的订单状态
+        if (order != null) {
+            System.out.println("查询到订单" + trade_status);
+            // 支付成功的状态
+            if (trade_status.equals(Const.ALIPAYSTATUS.TRADE_SUCCESS.getMsg())) {
+                System.out.println("修改订单编号");
+                /// 修改订单信息
+                orderDao.updateOrderStatusByOrderNo(20, orderno);
+            }
+        }
+        // 3.将支付信息添加到支付表中
+        Pay pay = new Pay();
+        pay.setOrder_no(orderno);
+        pay.setPay_platform(1);
+        pay.setPlatform_status(trade_status);
+        pay.setPlatform_number(trade_no);
+
+        // 根据订单信息查询用户id
+        pay.setUser_id(order.getUser_id());
+        orderDao.addPayInfo(pay);
+
+        return "success";
+    }
+
+    @Override
+    public ServerResponse createOrder(Integer shippingid, Integer userid) {
+
+        // 1. 从购物车中查询已选中的商品
+        List<Cart> checkedCarts = cartDao.findCheckedCartsByUserid(userid);
+
+        // 2. List<Cart>---->List<OrderItem>
+        ServerResponse serverResponse = getOrderItem(checkedCarts);
+        if(serverResponse.getStatus()!=ResponseCode.SUCCESS.getCode()){
+            // 订单获取失败
+            return ServerResponse.createServerResponce(ResponseCode.NOT_GET_ORDERITEM.getCode(), ResponseCode.NOT_GET_ORDERITEM.getMsg());
+
+        }
+
+        List<OrderItem> orderItems = (List<OrderItem>) serverResponse.getData();
+        // 3. 创建订单  Order  -insert
+            Order order = getOrder(userid,shippingid);
+            order.setPayment(getOrderPrice(orderItems));
+            orderDao.createOrder(order);
+        System.out.println( order.getId());
+        // 4.批量插入List<OrderItem>
+        for(OrderItem orderItem:orderItems){
+            orderItem.setOrder_no(order.getOrder_no());
+            orderItem.setUser_id(userid);
+        }
+        orderDao.batchInsertOrderItem(orderItems);
+        // 5.扣库存
+        reduceStock(checkedCarts);
+        // 6. 清空购物车
+        cartDao.removeCheckedProduct(checkedCarts,userid);
+
+        // 7. 返回数据OrderVO
+OrderVO orderVO = assembleOrderVO(order);
+
+        return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(),orderVO,ResponseCode.SUCCESS.getMsg());
+    }
+
+    /**
+     * 将订单对象转换为orderVO输出
+     * @param order
+     * @return
+     */
+
+    private OrderVO assembleOrderVO(Order order){
+
+        OrderVO orderVO = new OrderVO();
+
+        orderVO.setOrder_no(order.getOrder_no());
+        orderVO.setUser_id(order.getUser_id());
+        orderVO.setPayment(order.getPayment());
+        orderVO.setPayment_type(order.getPayment_type());
+        orderVO.setPostage(order.getPostage());
+        orderVO.setPaymentDesc(Const.PAYONLINE.ONLINE.getMsg());
+        orderVO.setStatus(order.getStatus());
+       orderVO.setStatusDesc(Const.ORDERSTATUS.codeOf(order.getStatus())!=null?null:Const.ORDERSTATUS.codeOf(order.getStatus()).getMsg());
+        orderVO.setSend_time(DateUtils.dateToString(order.getSend_time()));
+        orderVO.setCreate_time(DateUtils.dateToString(order.getCreate_time()));
+        orderVO.setClose_time(DateUtils.dateToString(order.getClose_time()));
+        orderVO.setUpdate_time(DateUtils.dateToString(order.getUpdate_time()));
+        orderVO.setPayment_time(DateUtils.dateToString(order.getPayment_time()));
+        orderVO.setEnd_time(DateUtils.dateToString(order.getEnd_time()));
+        orderVO.setImageHost(PropertiesUtils.getProperty("imageHost"));
+        orderVO.setShipping_id(order.getShipping_id());
+        orderVO.setShippingVO(shippingService.assembleVO(shippingDao.find(order.getShipping_id())));
+        orderVO.setReceiverName(shippingDao.find(order.getShipping_id()).getReceiver_name());
+        // 根据orderno查询list《Orderitem  》    List《Orderitemvo》
+        List<OrderItem> orderItems = orderDao.findOrderItemByOrderNo(order.getOrder_no());
+        List<OrderItemVO> orderItemVOS = new ArrayList<>();
+
+        for(OrderItem oi :orderItems){
+            OrderItemVO orderItemVO = new OrderItemVO();
+            orderItemVO=assembleOrderItem(oi);
+            orderItemVOS.add(orderItemVO);
+        }
+
+        orderVO.setList(orderItemVOS);
+
+
+        return orderVO;
+    }
+
+    public OrderItemVO assembleOrderItem( OrderItem orderItem){
+        OrderItemVO orderItemVO = new OrderItemVO();
+        orderItemVO.setId(orderItem.getId());
+        orderItemVO.setCreate_time(DateUtils.dateToString(orderItem.getCreate_time()));
+        orderItemVO.setCurrent_unit_price(orderItem.getCurrent_unit_price());
+        orderItemVO.setOrder_no(orderItem.getOrder_no());
+        orderItemVO.setProduct_id(orderItem.getProduct_id());
+        orderItemVO.setProduct_image(orderItem.getProduct_image());
+        orderItemVO.setProduct_name(orderItem.getProduct_name());
+        orderItemVO.setQuantity(orderItem.getQuantity());
+        orderItemVO.setTotal_price(orderItem.getTotal_price());
+        orderItemVO.setUpdate_time(DateUtils.dateToString(orderItem.getUpdate_time()));
+        orderItem.setUser_id(orderItem.getUser_id());
+        return orderItemVO;
+
+    }
+
+    public void reduceStock(List<Cart> carts){
+        for(Cart c: carts){
+            com.neuedu.pojo.Product p1 = productDao.findProductById(c.getProduct_id());
+            com.neuedu.pojo.Product p2 = new com.neuedu.pojo.Product();
+            p2.setStock(p1.getStock()-c.getQuantity());
+            p2.setId(c.getProduct_id());
+            productDao.updateProduct(p2);
+        }
+    }
+
+
+
+    /**
+     * 生成订单
+     * @param userid
+     * @param shippingid
+     * @return
+     */
+    public Order getOrder(Integer userid,Integer shippingid){
+        Order order = new Order();
+        order.setUser_id(userid);
+        order.setShipping_id(shippingid);
+        // 生成唯一的订单号
+        order.setOrder_no(generateOrderNo());
+        order.setPayment_type(1);
+        order.setPostage(0);
+        order.setStatus(Const.ALIPAYSTATUS.WAIT_BUYER_PAY.getCode());
+        return order;
+    }
+
+
+    private BigDecimal getOrderPrice(List<OrderItem> list){
+        BigDecimal sum = new BigDecimal(0);
+
+        for(OrderItem o:list){
+            BigDecimalUtils.add(sum,o.getTotal_price());
+        }
+        return sum;
+    }
+
+    private Long generateOrderNo(){
+        long millis = System.currentTimeMillis();
+        return millis+new Random().nextInt(1000);
+    }
+
+    /**
+     * 将购物车信息转化为订单商品信息
+     * @param list
+     * @return
+     */
+    public ServerResponse<List<OrderItem>> getOrderItem(List<Cart> list) {
+        List<OrderItem> listoi = new ArrayList<>();
+
+        if (list == null || list.size() == 0) {
+            return ServerResponse.createServerResponce(ResponseCode.CART_EMPTY.getCode(), ResponseCode.CART_EMPTY.getMsg());
+        }
+        for (Cart c : list) {
+
+            OrderItem orderItem = new OrderItem();
+
+
+            com.neuedu.pojo.Product product = productDao.findProductById(c.getProduct_id());
+            if (product == null && !product.getStatus().equals(1)) {
+                return ServerResponse.createServerResponce(ResponseCode.PRODUCT_OFFLINE.getCode(), ResponseCode.PRODUCT_OFFLINE.getMsg());
+            }
+            // 判断库存是否充足
+            if(c.getQuantity()>product.getStock()){
+                return ServerResponse.createServerResponce(ResponseCode.PRODUCT_STOCK_NOT_ENOUGH.getCode(), ResponseCode.PRODUCT_STOCK_NOT_ENOUGH.getMsg());
+            }
+            orderItem.setUser_id(c.getUser_id());
+            orderItem.setProduct_id(c.getProduct_id());
+            orderItem.setCurrent_unit_price(product.getPrice());
+            orderItem.setProduct_name(product.getName());
+            orderItem.setProduct_image(product.getMain_image());
+            orderItem.setQuantity(c.getQuantity());
+            orderItem.setTotal_price(BigDecimalUtils.multiply(orderItem.getCurrent_unit_price(),new BigDecimal(orderItem.getQuantity())));
+
+
+            listoi.add(orderItem);
+        }
+
+
+        return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), listoi, ResponseCode.SUCCESS.getMsg());
 
     }
 
@@ -559,7 +813,7 @@ public class OrderServiceImpl implements IOrderService
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                .setNotifyUrl("http://c3auda.natappfree.cc/BusinessWeb/order/callback.do")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                .setNotifyUrl("http://d3tjiu.natappfree.cc/BusinessWeb/order/callback.do")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);

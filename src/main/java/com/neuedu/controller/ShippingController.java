@@ -22,7 +22,7 @@ public class ShippingController {
     private IShippingService shippingService;
 
     @RequestMapping("/add")
-    public ServerResponse<String> add(Shipping shipping,HttpSession session) {
+    public ServerResponse<Integer> add(Shipping shipping,HttpSession session) {
 
         // 判断用户是否登录
         UserInfo user = (UserInfo) session.getAttribute(Const.CURRENTUSER);

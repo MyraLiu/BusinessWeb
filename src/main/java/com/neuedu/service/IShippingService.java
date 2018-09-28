@@ -11,7 +11,7 @@ public interface IShippingService {
      * @param shipping
      * @return
      */
-    ServerResponse<String> add(Shipping shipping);
+    ServerResponse<Integer> add(Shipping shipping);
 
     /**
      * 删除地址信息
@@ -39,6 +39,13 @@ public interface IShippingService {
      * @param userid
      * @return
      */
-    ServerResponse<ShippingListVO<ShippingVO>> list(Integer userid,Integer pageNum,Integer pageSize,String orderby);
+    ServerResponse<ShippingListVO<ShippingVO>> list(Integer userid, Integer pageNum, Integer pageSize, String orderby);
 
+
+    /**
+     * 获取shippingvo
+     * @param shipping
+     * @return
+     */
+    ShippingVO assembleVO(Shipping shipping);
 }

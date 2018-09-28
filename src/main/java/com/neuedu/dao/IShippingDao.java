@@ -39,7 +39,7 @@ public interface IShippingDao  {
      * @param userid
      * @return
      */
-    List<Shipping> list(Integer userid,Integer pageNum,Integer pageSize,Integer orderby);
+    List<Shipping> list(Integer userid, Integer pageNum, Integer pageSize, Integer orderby);
 
     /**
      * 获取对应的id

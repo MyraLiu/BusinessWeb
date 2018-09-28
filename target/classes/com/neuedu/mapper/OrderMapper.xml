@@ -32,6 +32,67 @@
     where order_no = #{orderNo} and user_id = #{userid}
 </select>
 
+    <select id="findOrderByOrderNo" parameterType="map" resultType="order">
+
+        select id,order_no,user_id,shipping_id,payment,payment_type,postage,status,payment_time,
+        send_time,end_time,close_time,create_time,update_time
+        from neuedu_order
+        where order_no = #{orderNo}
+    </select>
+
+
+
+    <select id="findOrderItemByOrderNo" parameterType="long" resultType="orderItem">
+        select id,user_id,order_no,product_id,product_name,product_image,current_unit_price,
+        quantity,total_price,create_time,update_time
+        from neuedu_order_item
+        where order_no = #{orderNo}
+    </select>
+
+
+    <update id="updateOrderStatusByOrderNo" parameterType="map">
+        update neuedu_order set status = #{status} where order_no = #{orderNo}
+    </update>
+
+
+    <insert id="addPayInfo" parameterType="pay" useGeneratedKeys="true" keyProperty="id">
+
+        insert into neuedu_pay_info (user_id,order_no,pay_platform,platform_number,platform_status,create_time,update_time)
+        values(#{user_id},#{order_no},#{pay_platform},#{platform_number},#{platform_status},now(),null)
+    </insert>
+
+    <select id="findUseridByOrderNo" parameterType="map" resultType="int">
+        select user_id from neuedu_order
+        where order_no = #{orderNo}
+     </select>
+
+    <select id="finduserid" parameterType="long" resultType="int">
+        select id from neuedu_order
+        where order_no = #{orderno}
+    </select>
+
+    <insert id="createOrder" parameterType="order" useGeneratedKeys="true" keyProperty="id" >
+
+        insert into neuedu_order
+         (order_no,user_id,shipping_id,payment,payment_type,postage,status,create_time)
+        values
+         (#{order_no},#{user_id},#{shipping_id},#{payment},#{payment_type},#{postage},#{status},now());
+
+    </insert>
+
+
+
+    <insert id="batchInsertOrderItem" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        insert into neuedu_order_item
+        (user_id,order_no,product_id,product_name,product_image,current_unit_price,
+        quantity,total_price,create_time,update_time)
+       VALUES
+       <foreach collection="list" item="orderItem" separator=",">
+
+           (#{orderItem.user_id},#{orderItem.order_no},#{orderItem.product_id},#{orderItem.product_name},#{orderItem.product_image},#{orderItem.current_unit_price},
+           #{orderItem.quantity},#{orderItem.total_price},now(),now())
+       </foreach>
+    </insert>
 
 
 </mapper>

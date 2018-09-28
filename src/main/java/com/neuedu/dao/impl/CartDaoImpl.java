@@ -73,4 +73,17 @@ public class CartDaoImpl implements ICartDao {
 
         return sqlSession.selectOne("com.neuedu.dao.ICartDao.sumProducts",userid);
     }
+
+    @Override
+    public List<Cart> findCheckedCartsByUserid(Integer userid) {
+        return sqlSession.selectList("com.neuedu.dao.ICartDao.findCheckedCartsByUserid",userid);
+    }
+
+    @Override
+    public Integer removeCheckedProduct(List<Cart> list,Integer userid) {
+        Map<String ,Object> map = new HashMap<>();
+        map.put("list",list);
+        map.put("userid",userid);
+        return sqlSession.delete("com.neuedu.dao.ICartDao.removeCheckedProduct",map);
+    }
 }

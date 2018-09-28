@@ -73,4 +73,17 @@ public interface ICartDao {
      */
     Integer sumProducts(Integer userid);
 
+    /**
+     * 根据用户id查询选中的商品
+     * @param userid
+     * @return
+     */
+    List<Cart>  findCheckedCartsByUserid(Integer userid);
+
+    /**
+     * 移除已生成订单的商品
+     * @param carts
+     * @return
+     */
+    Integer removeCheckedProduct(List<Cart> carts,Integer userid);
 }

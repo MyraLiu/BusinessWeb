@@ -82,4 +82,24 @@
     <select id="sumProducts" parameterType="int" resultType="int">
         select count(*) from neuedu_cart  where user_id = #{userid}
     </select>
+
+
+
+    <select id="findCheckedCartsByUserid" parameterType="int" resultType="cart">
+
+        select id ,user_id,product_id,quantity,checked,create_time,update_time from neuedu_cart
+        where user_id=#{userid}  and checked=1;
+    </select>
+
+
+    <delete id="removeCheckedProduct" parameterType="list">
+        DELETE  from neuedu_cart
+        <where>
+            user_id = #{userid} and
+            product_id IN
+            <foreach collection="list" item="cart" open="(" separator="," close=")">
+                #{cart.product_id}
+            </foreach>
+        </where>
+    </delete>
 </mapper>

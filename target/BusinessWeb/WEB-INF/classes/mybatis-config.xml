@@ -24,6 +24,7 @@
         <typeAlias type="com.neuedu.pojo.Shipping" alias="shipping"></typeAlias>
         <typeAlias type="com.neuedu.pojo.Order" alias="order"></typeAlias>
         <typeAlias type="com.neuedu.pojo.OrderItem" alias="orderItem"></typeAlias>
+        <typeAlias type="com.neuedu.pojo.Pay" alias="pay"></typeAlias>
     </typeAliases>
 
     <!-- autoMappingBehavior should be set in each test case -->

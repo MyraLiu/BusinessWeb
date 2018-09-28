@@ -7,7 +7,7 @@ public class Pay implements Serializable {
 
     private Integer  id;// int(11) NOT NULL AUTO_INCREMENT,
     private Integer  user_id;// int(11) DEFAULT NULL COMMENT '用户id',
-    private Integer  order_no;// bigint(20) DEFAULT NULL COMMENT '订单号',
+    private Long  order_no;// bigint(20) DEFAULT NULL COMMENT '订单号',
     private Integer  pay_platform;// int(10) DEFAULT NULL COMMENT '支付平台：1-支付宝，2-微信',
     private String platform_number;// varchar(200) DEFAULT NULL COMMENT '支付宝支付流水号',
             private String platform_status;// varchar(20) DEFAULT NULL COMMENT '支付宝支付状态',
@@ -48,11 +48,11 @@ public class Pay implements Serializable {
         this.user_id = user_id;
     }
 
-    public Integer getOrder_no() {
+    public Long getOrder_no() {
         return order_no;
     }
 
-    public void setOrder_no(Integer order_no) {
+    public void setOrder_no(Long order_no) {
         this.order_no = order_no;
     }
 

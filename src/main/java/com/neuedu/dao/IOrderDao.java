@@ -2,6 +2,7 @@ package com.neuedu.dao;
 
 import com.neuedu.pojo.Order;
 import com.neuedu.pojo.OrderItem;
+import com.neuedu.pojo.Pay;
 
 import java.util.List;
 
@@ -13,12 +14,49 @@ public interface IOrderDao {
      * @param userid
      * @return
      */
-    public Order findOrderByOrderNoAndUserid(Long orderNo,Integer userid);
+    public Order findOrderByOrderNoAndUserid(Long orderNo, Integer userid);
+    public Order findOrderByOrderNo(Long orderNo);
 
     /**
      * 根据订单号查询订单明细
      * @param orderNo
      * @return
      */
-    List<OrderItem> findOrderByOrderNo(Long orderNo);
+    List<OrderItem> findOrderItemByOrderNo(Long orderNo);
+
+    /**
+     * 根据订单号修改订单状态
+     * @param status
+     * @param orderNo
+     * @return
+     */
+    Integer updateOrderStatusByOrderNo(Integer status,Long orderNo);
+
+    /**
+     * 根据订单id查询用户id
+     * @param orderNo
+     * @return
+     */
+    Integer findUseridByOrderNo(Long orderNo);
+
+    /**
+     * 添加支付信息
+     * @param pay
+     * @return
+     */
+    Integer addPayInfo(Pay pay);
+
+    /**
+     * 创建订单
+     * @param order
+     * @return
+     */
+    Integer createOrder(Order order);
+
+    /**
+     * 批量插入订单商品信息
+     * @param list
+     * @return
+     */
+    Integer batchInsertOrderItem(List<OrderItem> list);
 }

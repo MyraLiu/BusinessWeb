@@ -17,6 +17,9 @@ public enum ResponseCode {
     NEED_ORDERNO(12,"订单号必须"),
     NOT_FOUND_ORDERNO(13,"没有该订单"),
     NO_ORDER_PERMISSION(14,"不支持的交易状态，交易返回异常!!!"),
+    CART_EMPTY(15,"购物车空"),
+    PRODUCT_STOCK_NOT_ENOUGH(16,"商品库存不足"),
+    NOT_GET_ORDERITEM(17,"订单商品信息获取失败"),
     UNKNOWN(90,"系统异常，预下单状态未知!!!"),
     ORDER_FAIL(99,"支付宝预下单失败!!!"),
     FAIL(100,"失败");
