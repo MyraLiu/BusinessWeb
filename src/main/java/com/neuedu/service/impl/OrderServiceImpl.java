@@ -249,6 +249,7 @@ public class OrderServiceImpl implements IOrderService
 
         // 2. List<Cart>---->List<OrderItem>
         ServerResponse serverResponse = getOrderItem(checkedCarts);
+        System.out.println(serverResponse.getStatus());
         if(serverResponse.getStatus()!=ResponseCode.SUCCESS.getCode()){
             // 订单获取失败
             return ServerResponse.createServerResponce(ResponseCode.NOT_GET_ORDERITEM.getCode(), ResponseCode.NOT_GET_ORDERITEM.getMsg());
@@ -396,12 +397,9 @@ OrderVO orderVO = assembleOrderVO(order);
             return ServerResponse.createServerResponce(ResponseCode.CART_EMPTY.getCode(), ResponseCode.CART_EMPTY.getMsg());
         }
         for (Cart c : list) {
-
             OrderItem orderItem = new OrderItem();
-
-
-            com.neuedu.pojo.Product product = productDao.findProductById(c.getProduct_id());
-            if (product == null && !product.getStatus().equals(1)) {
+            com.neuedu.pojo.Product product = productDao.findProductByIdAndOnline(c.getProduct_id());
+            if (product == null || !product.getStatus().equals(1)) {
                 return ServerResponse.createServerResponce(ResponseCode.PRODUCT_OFFLINE.getCode(), ResponseCode.PRODUCT_OFFLINE.getMsg());
             }
             // 判断库存是否充足

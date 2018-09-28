@@ -34,7 +34,8 @@ CREATE TABLE `neuedu_cart` (
 -- ----------------------------
 -- Records of neuedu_cart
 -- ----------------------------
-
+insert into neuedu_cart (user_id,product_id,quantity,checked,create_time)
+    values(30,10003,2,1,now());
 -- ----------------------------
 -- Table structure for neuedu_category
 -- ----------------------------

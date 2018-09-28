@@ -16,6 +16,9 @@ public class DateUtils {
 
     //将Date转成字符串格式
     public static String dateToString(Date date){
+        if(date==null){
+            return null;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String str = sdf.format(date);
         return str;
