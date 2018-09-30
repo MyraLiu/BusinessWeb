@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class OrderVO implements Serializable{
+public class OrderVO<T> implements Serializable{
     private Integer id;// int(11) NOT NULL AUTO_INCREMENT COMMENT '订单id',
     private Long order_no;// bigint(20) DEFAULT NULL COMMENT '订单号',
     private Integer user_id;// int(11) DEFAULT NULL COMMENT '用户id',
@@ -27,13 +27,13 @@ public class OrderVO implements Serializable{
     private String imageHost;// uri 域名
     private String receiverName;// 收货人姓名
     private ShippingVO shippingVO;// 地址信息
-private List<OrderItemVO> list;
+private List<T> list;
 
-    public List<OrderItemVO> getList() {
+    public List<T> getList() {
         return list;
     }
 
-    public void setList(List<OrderItemVO> list) {
+    public void setList(List<T> list) {
         this.list = list;
     }
 

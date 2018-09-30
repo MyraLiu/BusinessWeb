@@ -20,6 +20,9 @@ public enum ResponseCode {
     CART_EMPTY(15,"购物车空"),
     PRODUCT_STOCK_NOT_ENOUGH(16,"商品库存不足"),
     NOT_GET_ORDERITEM(17,"订单商品信息获取失败"),
+    ORDER_CAN_NOT_CANCEL(18,"订单不能取消"),
+    CART_NOT_FOUND_PRODUCT(19,"购物车中为找打商品"),
+    ORDER_LIST_IS_NULL(20,"订单列表为空"),
     UNKNOWN(90,"系统异常，预下单状态未知!!!"),
     ORDER_FAIL(99,"支付宝预下单失败!!!"),
     FAIL(100,"失败");

@@ -71,5 +71,40 @@ public class OrderDaoImpl implements IOrderDao {
         return sqlSession.insert("com.neuedu.dao.IOrderDao.batchInsertOrderItem",list);
     }
 
+    @Override
+    public List<Order> listOrder(Integer pagenum, Integer pagesize, Integer userid) {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("offset",(pagenum-1)*pagesize);
+        map.put("pagesize",pagesize);
+        map.put("userid",userid);
+
+        return sqlSession.selectList("com.neuedu.dao.IOrderDao.listOrder",map);
+    }
+
+    @Override
+    public List<Order> listAllOrder(Integer pagenum, Integer pagesize) {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("offset",(pagenum-1)*pagesize);
+        map.put("pagesize",pagesize);
+
+        return sqlSession.selectList("com.neuedu.dao.IOrderDao.listAllOrder",map);
+    }
+
+    @Override
+    public Integer countOrders(Integer userid) {
+        return sqlSession.selectOne("com.neuedu.dao.IOrderDao.countOrders",userid);
+    }
+
+    @Override
+    public Integer countAllOrders() {
+        return sqlSession.selectOne("com.neuedu.dao.IOrderDao.countAllOrders");
+    }
+
+    @Override
+    public Order searchByOrderNo(Long orderNo) {
+        String num = "%"+orderNo+"%";
+        return sqlSession.selectOne("com.neuedu.dao.IOrderDao.searchByOrderNo",num);
+    }
+
 
 }

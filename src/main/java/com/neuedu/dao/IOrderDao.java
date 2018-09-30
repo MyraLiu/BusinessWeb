@@ -59,4 +59,38 @@ public interface IOrderDao {
      * @return
      */
     Integer batchInsertOrderItem(List<OrderItem> list);
+
+    /**
+     * 用户的全部订单
+     * @param pagenum
+     * @param pagesize
+     * @param userid
+     * @return
+     */
+    List<Order> listOrder(Integer pagenum, Integer pagesize, Integer userid);
+
+    /**
+     * 商户查询所有订单
+     * @param pagenum
+     * @param pagesize
+     * @return
+     */
+    List<Order> listAllOrder(Integer pagenum, Integer pagesize);
+
+    /**
+     * 获取用户总订单数
+     * @param userid
+     * @return
+     */
+   Integer countOrders(Integer userid);
+
+    /**
+     * 获取商户订单总数
+     * @return
+     */
+   Integer countAllOrders();
+
+   Order searchByOrderNo(Long orderNo);
+
+
 }

@@ -3,6 +3,7 @@ package com.neuedu;
 import com.neuedu.dao.IProductDao;
 import com.neuedu.dao.impl.ProductDaoImpl;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,7 @@ public class ProductDaoImplTest {
 
     @Test
     public void testFindById(){
+
 
         System.out.println(pdo.findProductById(10000));
     }

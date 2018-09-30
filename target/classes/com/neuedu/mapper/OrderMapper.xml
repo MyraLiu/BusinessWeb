@@ -95,4 +95,36 @@
     </insert>
 
 
+    <select id="listOrder" parameterType="map" resultType="order">
+         select id,order_no,user_id,shipping_id,payment,payment_type,postage,status,payment_time,
+    send_time,end_time,close_time,create_time,update_time
+    from neuedu_order
+    where  user_id = #{userid}
+    order by create_time desc
+    limit #{offset},#{pagesize}
+    </select>
+
+    <select id="listAllOrder" parameterType="map" resultType="order">
+        select id,order_no,user_id,shipping_id,payment,payment_type,postage,status,payment_time,
+        send_time,end_time,close_time,create_time,update_time
+        from neuedu_order
+       order by create_time desc
+        limit #{offset},#{pagesize}
+    </select>
+
+
+    <select id="countOrders" parameterType="int" resultType="int">
+        select count(*) from neuedu_order where user_id=#{userid}
+    </select>
+
+    <select id="countAllOrders" resultType="int"  >
+        select count(*) from neuedu_order
+    </select>
+
+    <select id="searchByOrderNo" parameterType="string" resultType="order">
+         select id,order_no,user_id,shipping_id,payment,payment_type,postage,status,payment_time,
+        send_time,end_time,close_time,create_time,update_time
+        from neuedu_order
+        where order_no like #{num}
+    </select>
 </mapper>

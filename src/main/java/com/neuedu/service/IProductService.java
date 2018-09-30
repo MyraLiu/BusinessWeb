@@ -55,7 +55,7 @@ public interface IProductService {
      */
     public ServerResponse<ProductVO> findProductDetail(Integer productId);
 
-
+    public ProductVO assembleProduct(Product product);
 
     ServerResponse<PageModel<ProductVO>> seatchProducts(Integer categoryId,String productname,Integer pageNo,Integer pageSize,String orderby);
 }
