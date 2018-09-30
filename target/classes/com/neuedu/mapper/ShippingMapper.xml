@@ -77,34 +77,55 @@
     </update>
 
 
-
     <delete id="remove" parameterType="int">
         delete from neuedu_shipping
         where id=#{shippingid}
     </delete>
 
 
-    <select id="find" parameterType="int" resultType="shipping">
+    <select id="findByUser" parameterType="map" resultType="shipping">
         select id,user_id, receiver_name, receiver_phone, receiver_mobile,receiver_province,receiver_city,receiver_district,
           receiver_address,receiver_zip,create_time,update_time
           from neuedu_shipping
-          where id=#{shippingid}
+          where id=#{shippingid} and user_id=#{userid}
+    </select>
+
+    <select id="findByAdmin" parameterType="int" resultType="shipping">
+        select id,user_id, receiver_name, receiver_phone, receiver_mobile,receiver_province,receiver_city,receiver_district,
+        receiver_address,receiver_zip,create_time,update_time
+        from neuedu_shipping
+        where id=#{shippingid}
     </select>
 
     <select id="list" parameterType="map" resultType="shipping">
-        select id,user_id, receiver_name, receiver_phone, receiver_mobile,receiver_province,receiver_city,receiver_district,
-          receiver_address,receiver_zip,create_time,update_time
-          from neuedu_shipping
-          where user_id=#{userid}
-          <if test="ordery==101">
-              order by receiver_name asc
-          </if>
+        select id,user_id, receiver_name, receiver_phone,
+        receiver_mobile,receiver_province,receiver_city,receiver_district,
+        receiver_address,receiver_zip,create_time,update_time
+        from neuedu_shipping
+        where user_id=#{userid}
+        <if test="orderby==101">
+            order by receiver_name asc
+        </if>
         <if test="orderby==102">
-            ORDER  by receiver_name desc
+            ORDER by receiver_name desc
         </if>
         limit #{offset},#{pageSize}
     </select>
 
+    <select id="listAll" parameterType="map" resultType="shipping">
+        select id,user_id, receiver_name, receiver_phone,
+        receiver_mobile,receiver_province,receiver_city,receiver_district,
+        receiver_address,receiver_zip,create_time,update_time
+        from neuedu_shipping
+
+        <if test="ordery==101">
+            order by receiver_name asc
+        </if>
+        <if test="orderby==102">
+            ORDER by receiver_name desc
+        </if>
+        limit #{offset},#{pageSize}
+    </select>
 
 
     <select id="findId" parameterType="shipping" resultType="int">
@@ -120,4 +141,8 @@
         where user_id = #{userid}
     </select>
 
+
+    <select id="countAll" resultType="int">
+        select count(*) from neuedu_shipping
+    </select>
 </mapper>

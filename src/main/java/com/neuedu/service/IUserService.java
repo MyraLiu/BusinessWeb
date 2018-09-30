@@ -60,4 +60,11 @@ public interface IUserService {
      */
     boolean isAdminRole(UserInfo user );
 
+ /**
+  * 修改用户个人信息
+  * @param user
+  * @return
+  */
+ ServerResponse updateSelfInfo(UserInfo user,Integer userid);
+
 }

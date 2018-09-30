@@ -493,4 +493,9 @@ public class UserDaoImpl implements IUserDao {
     public int insertUsers(List<UserInfo> users) {
         return 0;
     }
+
+    @Override
+    public Integer updateSelfInfo(UserInfo user) {
+        return null;
+    }
 }

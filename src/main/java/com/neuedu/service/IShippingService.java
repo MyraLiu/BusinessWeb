@@ -32,14 +32,15 @@ public interface IShippingService {
      * @param shippingId
      * @return
      */
+    ServerResponse<ShippingVO> find(Integer shippingId,Integer userid);
     ServerResponse<ShippingVO> find(Integer shippingId);
-
     /**
      * 查询用户的所有地址
      * @param userid
      * @return
      */
     ServerResponse<ShippingListVO<ShippingVO>> list(Integer userid, Integer pageNum, Integer pageSize, String orderby);
+    ServerResponse<ShippingListVO<ShippingVO>> listAll( Integer pageNum, Integer pageSize, String orderby);
 
 
     /**

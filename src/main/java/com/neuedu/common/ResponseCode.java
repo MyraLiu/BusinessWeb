@@ -23,6 +23,8 @@ public enum ResponseCode {
     ORDER_CAN_NOT_CANCEL(18,"订单不能取消"),
     CART_NOT_FOUND_PRODUCT(19,"购物车中为找打商品"),
     ORDER_LIST_IS_NULL(20,"订单列表为空"),
+    USERNAME_CAN_NOT_MODIFY(21,"用户名不能修改"),
+
     UNKNOWN(90,"系统异常，预下单状态未知!!!"),
     ORDER_FAIL(99,"支付宝预下单失败!!!"),
     FAIL(100,"失败");

@@ -58,7 +58,7 @@ public class BackOrderController {
 
         // 判断用户是否有权限
         if(userService.isAdminRole(userInfo)){
-            return orderService.listOrder(pagenum,pagesize,userInfo.getId());
+            return orderService.listAllOrder(pagenum,pagesize);
 
         }else{
             return ServerResponse.createServerResponce(ResponseCode.NO_PERMISSION.getCode(),ResponseCode.NO_PERMISSION.getMsg());

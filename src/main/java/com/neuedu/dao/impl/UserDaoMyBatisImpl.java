@@ -57,14 +57,14 @@ public class UserDaoMyBatisImpl implements IUserDao{
     public UserInfo autoLogin(String token) {
         UserInfo user = new UserInfo();
         user.setToken(token);
-        return sqlSession.selectOne("com.neuedu.dao.findByOption",user);
+        return sqlSession.selectOne("com.neuedu.dao.IUserDao.findByOption",user);
     }
 
     @Override
     public UserInfo selectById(int id) {
         UserInfo user = new UserInfo();
         user.setId(id);
-        return sqlSession.selectOne("com.neuedu.dao.findByOption",user);
+        return sqlSession.selectOne("com.neuedu.dao.IUserDao.findByOption",user);
     }
 
     @Override
@@ -172,5 +172,10 @@ public class UserDaoMyBatisImpl implements IUserDao{
     @Override
     public int insertUsers(List<UserInfo> users) {
         return sqlSession.insert("com.neuedu.dao.IUserDao.insertUsers",users);
+    }
+
+    @Override
+    public Integer updateSelfInfo(UserInfo user) {
+        return sqlSession.update("com.neuedu.dao.IUserDao.updateSelfInfo",user);
     }
 }

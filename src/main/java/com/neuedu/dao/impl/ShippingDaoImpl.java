@@ -32,9 +32,17 @@ public class ShippingDaoImpl implements IShippingDao {
     }
 
     @Override
-    public Shipping find(Integer shippingid) {
+    public Shipping findByUser(Integer shippingid,Integer userid) {
         System.out.println(shippingid);
-        return  sqlSession.selectOne("com.neuedu.dao.IShippingDao.find",shippingid);
+        Map<String ,Object> map = new HashMap<>();
+        map.put("shippingid",shippingid);
+        map.put("userid",userid);
+        return  sqlSession.selectOne("com.neuedu.dao.IShippingDao.findByUser",map);
+    }
+
+    @Override
+    public Shipping findByAdmin(Integer shippingid) {
+        return  sqlSession.selectOne("com.neuedu.dao.IShippingDao.findByAdmin",shippingid);
     }
 
     @Override
@@ -48,6 +56,15 @@ public class ShippingDaoImpl implements IShippingDao {
     }
 
     @Override
+    public List<Shipping> listAll(Integer pageNum, Integer pageSize, Integer orderby) {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("orderby",orderby);
+        map.put("offset",(pageNum-1)*pageSize);
+        map.put("pageSize",pageSize);
+        return  sqlSession.selectList("com.neuedu.dao.IShippingDao.listAll",map);
+    }
+
+    @Override
     public Integer findId(Shipping shipping) {
         return sqlSession.selectOne("com.neuedu.dao.IShippingDao.findId",shipping);
     }
@@ -55,6 +72,11 @@ public class ShippingDaoImpl implements IShippingDao {
     @Override
     public Integer count(Integer userid) {
         return sqlSession.selectOne("com.neuedu.dao.IShippingDao.count",userid);
+    }
+
+    @Override
+    public Integer countAll() {
+        return sqlSession.selectOne("com.neuedu.dao.IShippingDao.countAll");
     }
 
 

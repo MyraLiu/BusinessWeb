@@ -1,5 +1,6 @@
 package com.neuedu.dao;
 
+import com.neuedu.common.ServerResponse;
 import com.neuedu.pojo.UserInfo;
 
 import java.util.List;
@@ -26,6 +27,13 @@ public interface IUserDao {
     public List<UserInfo> findByIds(List<Integer> listid);
     public int updateUser(UserInfo user);
     public int insertUsers(List<UserInfo> users);
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    Integer updateSelfInfo(UserInfo user);
 
 
 }

@@ -4,6 +4,7 @@ import com.mysql.fabric.Server;
 import com.neuedu.businessconst.Const;
 import com.neuedu.cache.TokenCache;
 import com.neuedu.common.MD5Utils;
+import com.neuedu.common.ResponseCode;
 import com.neuedu.common.ServerResponse;
 import com.neuedu.dao.IUserDao;
 import com.neuedu.dao.impl.UserDaoImpl;
@@ -162,6 +163,37 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean isAdminRole(UserInfo user) {
         return user.getRole() == 0;
+    }
+
+    @Override
+    public ServerResponse updateSelfInfo(UserInfo user,Integer userid) {
+
+        UserInfo user2 = new UserInfo();
+       user2.setId(userid);
+      if(user.getUsername()!=null){
+//           user2.setUsername(user.getUsername());
+          return ServerResponse.createServerResponce(ResponseCode.USERNAME_CAN_NOT_MODIFY.getCode(),ResponseCode.USERNAME_CAN_NOT_MODIFY.getMsg());
+       }
+       if(user.getQuestion()!=null){
+           user2.setQuestion(user.getQuestion());
+       }
+       if(user.getEmail()!=null){
+           user2.setEmail(user.getEmail());
+       }
+       if(user.getPhone()!=null){
+           user2.setPhone(user.getPhone());
+       }
+       if(user.getAnswer()!=null){
+           user2.setAnswer(user.getAnswer());
+       }
+
+       Integer result = userDao.updateSelfInfo(user2);
+        if(result>0){
+            UserInfo user3 = userDao.selectById(userid);
+            return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(),user3,ResponseCode.SUCCESS.getMsg());
+        }else {
+            return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(),ResponseCode.FAIL.getMsg());
+        }
     }
 
 }

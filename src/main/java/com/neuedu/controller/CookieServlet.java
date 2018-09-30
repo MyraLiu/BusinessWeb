@@ -31,7 +31,7 @@ public class CookieServlet extends HttpServlet {
         }
         //cookie在客户端保存周期
         //cookie 的生存周期
-//        cookie.setMaxAge(7*24*3600);
+        cookie.setMaxAge(7*24*3600);
         //
 
     }

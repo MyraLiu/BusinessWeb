@@ -187,5 +187,27 @@ password
     select count(1) from neuedu_user where username=#{username} and question=#{question} and answer=#{answer}
 </select>
 
+    <update id="updateSelfInfo" parameterType="user" >
+        update neuedu_user
+        <set>
+            <if test="phone!=null">
+                phone = #{phone},
+            </if>
+            <if test="email!=null">
+                email = #{email},
+            </if>
+            <if test="question!=null">
+                question = #{question},
+            </if>
+            <if test="answer!=null">
+                answer = #{answer},
+            </if>
+
+
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
 
 </mapper>

@@ -25,7 +25,7 @@ public class PractiseController2json {
     // 接受前端传入参数
 //    public   String   addproduct(@RequestParam("productid") String id,@RequestParam("name") String name){
 //    如果传参的名称与形参的名称相同，可以省略注解不写
-    public String addproduct(String productid, String name) {
+    public String addproduct( String productid, String name) {
         System.out.println("====addproduct====" + productid + "   " + name);
         //  /WEB-INF/jsp/addproduct.jsp
         return "addproduct"; //逻辑视图
@@ -131,7 +131,7 @@ public class PractiseController2json {
 //        配置请求分派
         System.out.println("===========redirect===========");
 //        return "forward:findallbyjson";
-        return"redirect:2/4";
+        return "redirect:2/4";
 
     }
 

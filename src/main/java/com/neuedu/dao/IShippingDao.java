@@ -32,7 +32,8 @@ public interface IShippingDao  {
      * @param shippingid
      * @return
      */
-    Shipping find(Integer shippingid);
+    Shipping findByUser(Integer shippingid,Integer userid);
+    Shipping findByAdmin(Integer shippingid);
 
     /**
      * 地址清单
@@ -40,6 +41,13 @@ public interface IShippingDao  {
      * @return
      */
     List<Shipping> list(Integer userid, Integer pageNum, Integer pageSize, Integer orderby);
+
+
+    /**
+     * 地址清单
+     * @return
+     */
+    List<Shipping> listAll( Integer pageNum, Integer pageSize, Integer orderby);
 
     /**
      * 获取对应的id
@@ -54,4 +62,11 @@ public interface IShippingDao  {
      * @return
      */
     Integer count(Integer userid);
+
+
+    /**
+     * 获取地址个数
+     * @return
+     */
+    Integer countAll();
 }

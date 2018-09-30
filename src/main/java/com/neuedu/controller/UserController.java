@@ -58,28 +58,19 @@ public class UserController {
 
     }
 
-
-    protected void updateSelfInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@RequestMapping("/updateselfinfo")
+    protected ServerResponse updateSelfInfo(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         System.out.println("=====updateSelfInfo=======");
-        //获取请求参数
+        //获取用户信息
         HttpSession session = request.getSession();
-        String username = request.getParameter("username");//  '用户名',
-        String oldpassword = request.getParameter("oldpassword");//  '用户名',
-        String newpassword = request.getParameter("newpassword");//  '用户名',
-
-        //非空验证
-        if (username == null || username.equals("")) {
-            throw BusinesseLoginException.createException(session, "用户名不能为空", "3s后跳转到输入密码页面", "answer.jsp");
-        }
-        if (oldpassword == null || oldpassword.equals("")) {
-            throw BusinesseLoginException.createException(session, "用户名不能为空", "3s后跳转到输入密码页面", "answer.jsp");
-        }
-        if (newpassword == null || newpassword.equals("")) {
-            throw BusinesseLoginException.createException(session, "用户名不能为空", "3s后跳转到输入密码页面", "answer.jsp");
-        }
+       UserInfo user = (UserInfo) session.getAttribute(Const.CURRENTUSER);
+       // 要求用户登录
+    if (user == null) {
+        return ServerResponse.createServerResponce(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getMsg());
+    }
         // TODO logic service develop
-
+        return userService.updateSelfInfo(userInfo,user.getId());
     }
 
     /**

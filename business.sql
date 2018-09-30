@@ -39,7 +39,7 @@ insert into neuedu_cart (user_id,product_id,quantity,checked,create_time)
 
 
 insert into neuedu_cart (user_id,product_id,quantity,checked,create_time)
-values(22,10003,2,1,now()),(22,10005,2,1,now());
+values(38 ,10003,2,1,now()),(38 ,10005,2,1,now());
 
 -- ----------------------------
 -- Table structure for neuedu_category
@@ -112,15 +112,15 @@ values(10010,30,6,360,1,0,10,now(),null,null,null,now(),null),
   (10017,30,17,140,1,0,10,now(),null,null,null,now(),null);
 insert into neuedu_order (order_no,user_id,shipping_id,payment,payment_type,postage,status,payment_time,
                           send_time,end_time,close_time,create_time,update_time)
-values(10020,22,6,360,1,0,10,now(),null,null,null,now(),null),
-(10021,22,17,70,1,0,10,now(),null,null,null,now(),null);
+values(10023,22,6,360,1,0,10,now(),null,null,null,now(),null),
+(10024,22,17,70,1,0,10,now(),null,null,null,now(),null);
 
 
 insert into neuedu_order_item (user_id,order_no,product_id,product_name,product_image,current_unit_price,
                                quantity,total_price,create_time,update_time)
-values(22,10020,10007 ,"iphone10","1.jpg",60,3, 180,now(),now() ),
-  (22,10020,10007 ,"iphone10","1.jpg",60,3, 180,now(),now() ),
-  (22,10021,10007 ,"iphone10","1.jpg",70,1, 70,now(),now() );
+values(22,10023,10007 ,"iphone10","1.jpg",60,3, 180,now(),now() ),
+  (22,10024,10007 ,"iphone10","1.jpg",60,3, 180,now(),now() ),
+  (22,10024,10007 ,"iphone10","1.jpg",70,1, 70,now(),now() );
 
 
 

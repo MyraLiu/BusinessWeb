@@ -197,7 +197,7 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
         }
-        return ServerResponse.createServerResponce(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg());
+        return ServerResponse.createServerResponce(ResponseCode.FAIL.getCode(), ResponseCode.FAIL.getMsg());
 
     }
 
